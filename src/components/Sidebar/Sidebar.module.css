@@ -1,0 +1,31 @@
+.Wrapper {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 544px;
+  width: 446px;
+  margin-left: 133px;
+  margin-right: 66px;
+  margin-top: 38px;
+}
+
+.Sidebar {
+  background-color: transparent;
+}
+
+.Title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 1.32;
+  margin-top: 80px;
+}
+
+.SubTitle {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.45;
+  margin-top: 10px;
+  color: var(--text-color);
+}

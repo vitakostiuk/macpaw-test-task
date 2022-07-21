@@ -1,0 +1,13 @@
+.Wrapper {
+  width: 680px;
+  height: 840px;
+  background-color: #fbe0dc;
+}
+
+.HeroImg {
+  position: absolute;
+  width: 715px;
+  height: 920px;
+  top: -115px;
+  right: 10px;
+}
