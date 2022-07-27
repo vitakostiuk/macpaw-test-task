@@ -5,8 +5,9 @@ import UserActionLogs from '../UserActionLogs';
 import { ReactComponent as Like } from 'images/like-white-30.svg';
 import { ReactComponent as Favorite } from 'images/fav-white-30.svg';
 import { ReactComponent as Dislike } from 'images/dislike-white-30.svg';
-import { ReactComponent as ArrowLeftBtn } from 'images/back-20.svg';
 import Header from '../Header';
+import BackBtn from 'components/common/BackBtn';
+import MainButton from 'components/common/MainButton';
 import s from './Voting.module.css';
 
 const getTime = () => {
@@ -176,16 +177,8 @@ const VotingBlock = () => {
       <Header handleSearchbarSubmit={handleSearchbarSubmit} />
       <div className={s.Paper}>
         <div className={s.BtnWrapper}>
-          <button type="button" className={s.LeftArrowBtn}>
-            <ArrowLeftBtn />
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsClickVoting(true)}
-            className={s.BigButton}
-          >
-            VOTING
-          </button>
+          <BackBtn />
+          <MainButton onClick={() => setIsClickVoting(true)}>VOTING</MainButton>
         </div>
 
         {isLoading && (

@@ -1,0 +1,171 @@
+/* Dots styles for slider */
+.dots {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: block;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  list-style: none;
+
+  text-align: center;
+  border-radius: 20px;
+}
+
+.dots li {
+  position: relative;
+
+  display: inline-block;
+
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  margin-right: 5px;
+  padding: 0;
+
+  cursor: pointer;
+}
+
+.dots li:last-child {
+  margin-right: 0px;
+}
+
+.dots li button {
+  font-size: 0;
+  line-height: 0;
+
+  display: block;
+
+  width: 10px;
+  height: 10px;
+  /* border-radius: 10px; */
+  padding: 5px;
+
+  cursor: pointer;
+
+  color: transparent;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+.dots li button:hover,
+.dots li button:focus {
+  outline: none;
+}
+/* .dots li button:hover:before,
+.dots li button:focus:before {
+  opacity: 1;
+} */
+.dots li button:before {
+  font-family: 'slick';
+  font-size: 6px;
+  line-height: 20px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 10px;
+  height: 10px;
+
+  content: '•';
+  text-align: center;
+
+  border-radius: 10px;
+  background-color: #fbe0dc;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.dots li.slick-active button:before {
+  background-color: #ff868e;
+}
+
+/* Styles for block text */
+.textWrapper {
+  position: relative;
+  width: 640px;
+  height: 204px;
+  border: 2px solid #fbe0dc;
+  margin-top: 50px;
+  border-radius: 20px;
+}
+
+.name {
+  position: absolute;
+  top: -18%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: inline-block;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 5px 40px;
+
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.44;
+  color: #1d1d1d;
+}
+
+.bredFor {
+  display: block;
+  margin-top: 26px;
+
+  text-align: center;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.45;
+
+  color: #8c8c8c;
+}
+
+.optionsWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 10px;
+
+  padding-left: 40px;
+  padding-right: 40px;
+  margin-top: 20px;
+}
+
+.one {
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+}
+
+.optionWrapper {
+  /* display: flex;
+  flex-wrap: wrap; */
+  /* align-items: center; */
+}
+
+.title {
+  display: inline-block;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.44;
+
+  color: #1d1d1d;
+}
+
+.description {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.44;
+
+  color: #8c8c8c;
+}

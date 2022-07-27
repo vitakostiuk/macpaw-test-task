@@ -15,6 +15,7 @@ const SearchBar = ({ handleSearchbarSubmit }) => {
     }
     handleSearchbarSubmit(query);
     setQuery('');
+    e.target.reset();
   };
 
   return (

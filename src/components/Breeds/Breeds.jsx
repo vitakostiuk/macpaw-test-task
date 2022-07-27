@@ -7,13 +7,17 @@ import {
 import 'react-notifications/lib/notifications.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { ReactComponent as ArrowLeftBtn } from 'images/back-20.svg';
+import { Link } from 'react-router-dom';
 import { ReactComponent as SortAB } from 'images/sort-20.svg';
 import { ReactComponent as SortBA } from 'images/soft-revert-20.svg';
 import { limitImg } from '../../data/options';
 import { getBreedsOptions } from 'utils/breedsOptions';
+import BackBtn from 'components/common/BackBtn';
+import MainButton from 'components/common/MainButton';
 import Header from '../Header';
-// import * as api from '../../services/api-cat';
+import BreedGallery from './BreedGallery';
+import BreedInfo from './BreedInfo';
+// import BreedInfoPage from 'pages/BreedInfoPage';
 import s from './Breeds.module.css';
 
 const BreedsPage = () => {
@@ -25,6 +29,7 @@ const BreedsPage = () => {
   const [page, setPage] = useState(0);
   const [typeOfSort, setTypeOfSort] = useState('ASC');
   const [isLoading, setIsLoading] = useState(false);
+  const [isClickOnGalleryItem, setIsClickOnGalleryItem] = useState(false);
   const [hiddenBtn, setHiddenBtn] = useState(true);
   const [query, setQuery] = useState('');
   const [resultByquery, setResultByquery] = useState({});
@@ -45,7 +50,7 @@ const BreedsPage = () => {
 
         // Update state --breedsOptions--
         let resultAll = await axios.get('https://api.thecatapi.com/v1/breeds');
-        console.log('resultAll', resultAll.data);
+        console.log('breedsOptions', resultAll.data);
         setBreedsOptions(
           getBreedsOptions(resultAll.data, {
             label: 'All breeds',
@@ -59,7 +64,7 @@ const BreedsPage = () => {
         let { data } = await axios.get('https://api.thecatapi.com/v1/breeds', {
           params: { limit, page, order: typeOfSort },
         });
-        console.log('data', data);
+        console.log('allBreeds', data);
         if (data.length === 0) {
           setHiddenBtn(false);
           NotificationManager.warning(`There are not images!`);
@@ -83,7 +88,7 @@ const BreedsPage = () => {
               params: { q: query },
             },
           );
-          console.log('queryResult', queryResult.data);
+          console.log('Search by name', queryResult.data);
           setResultByquery(queryResult.data[0]);
         }
       } catch (error) {
@@ -164,58 +169,65 @@ const BreedsPage = () => {
     setQuery(name);
   };
 
+  const handleClickOnGalleryItem = () => {
+    setIsClickOnGalleryItem(true);
+    setHiddenBtn(true);
+  };
+
   return (
     <>
       <Header handleSearchbarSubmit={handleSearchbarSubmit} />
       <div className={s.Paper}>
-        <div className={s.BtnWrapper}>
-          <button type="button" className={s.LeftArrowBtn}>
-            <ArrowLeftBtn />
-          </button>
-          <button
-            type="button"
-            onClick={() => setName('All breeds')}
-            className={s.BigButton}
-          >
-            BREEDS
-          </button>
-          <select name="breed" onChange={handleChange} className={s.SelectName}>
-            {breedsOptions.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-          <select
-            name="limit"
-            onChange={handleChange}
-            className={s.SelectLimit}
-          >
-            {limitImg.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {`Limit: ${label}`}
-              </option>
-            ))}
-          </select>
-          {name === 'All breeds' && (
-            <>
-              <button
-                type="button"
-                className={s.SortBtn}
-                onClick={() => setTypeOfSort('DESC')}
-              >
-                <SortAB className={s.Letter} />
-              </button>
-              <button
-                type="button"
-                className={s.SortBtn}
-                onClick={() => setTypeOfSort('ASC')}
-              >
-                <SortBA className={s.Letter} />
-              </button>
-            </>
-          )}
-        </div>
+        {!isClickOnGalleryItem && (
+          <div className={s.BtnWrapper}>
+            <BackBtn />
+            <MainButton onClick={() => setName('All breeds')}>
+              BREEDS
+            </MainButton>
+
+            <select
+              name="breed"
+              onChange={handleChange}
+              className={s.SelectName}
+            >
+              {breedsOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            <select
+              name="limit"
+              onChange={handleChange}
+              className={s.SelectLimit}
+            >
+              {limitImg.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {`Limit: ${label}`}
+                </option>
+              ))}
+            </select>
+            {name === 'All breeds' && (
+              <>
+                <button
+                  type="button"
+                  className={s.SortBtn}
+                  onClick={() => setTypeOfSort('DESC')}
+                >
+                  <SortAB className={s.Letter} />
+                </button>
+                <button
+                  type="button"
+                  className={s.SortBtn}
+                  onClick={() => setTypeOfSort('ASC')}
+                >
+                  <SortBA className={s.Letter} />
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
         {isLoading && (
           <div className={s.Loader}>
             <BallTriangle
@@ -233,32 +245,35 @@ const BreedsPage = () => {
           </div>
         )}
 
-        {breed && (
-          <ul className={s.GalleryWrap}>
-            {breed.map(({ id, url }) => (
-              <li key={id} className={s.GalleryItem}>
-                <img src={url} alt={name} className={s.Img} />
-              </li>
-            ))}
-          </ul>
+        {breed && <BreedGallery name={name} breed={breed} />}
+
+        {allBreeds && !isClickOnGalleryItem && (
+          <>
+            <ul className={s.GalleryWrap}>
+              {allBreeds.map(({ name, id, image }) => (
+                <li
+                  key={id}
+                  className={s.GalleryItem}
+                  onClick={handleClickOnGalleryItem}
+                >
+                  {image ? (
+                    <Link to={`${id}`}>
+                      <img src={image.url} alt="cat" className={s.Img} />
+                      <div className={s.After}>
+                        <button className={s.Name}>{name}</button>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className={s.ImgNotFound}>Image not found</div>
+                  )}
+                </li>
+              ))}
+              {/* <Outlet /> */}
+            </ul>
+          </>
         )}
 
-        {allBreeds && (
-          <ul className={s.GalleryWrap}>
-            {allBreeds.map(({ name, id, image }) => (
-              <li key={id} className={s.GalleryItem}>
-                {image ? (
-                  <img src={image.url} alt="cat" className={s.Img} />
-                ) : (
-                  <div className={s.ImgNotFound}>Image not found</div>
-                )}
-                <div className={s.After}>
-                  <button className={s.Name}>{name}</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+        {isClickOnGalleryItem && <BreedInfo />}
 
         {!hiddenBtn && (
           <div className={s.RouteBtnWrapper}>

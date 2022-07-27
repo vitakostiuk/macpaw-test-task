@@ -1,1 +1,1 @@
-export { default } from './Breeds';
+export { default } from './Breeds.jsx';

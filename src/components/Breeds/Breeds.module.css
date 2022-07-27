@@ -4,7 +4,6 @@
   border-radius: 20px;
   margin-top: 10px;
   padding: 20px;
-  /* border: 1px solid red; */
 }
 
 .Loader {
@@ -17,39 +16,6 @@
 
 .BtnWrapper {
   display: flex;
-  margin-bottom: 20px;
-}
-
-.BigButton {
-  display: inline-block;
-  width: 146px;
-  height: 40px;
-  background-color: var(--accent-color);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.5;
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.LeftArrowBtn {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
-  border: none;
-  background-color: #fbe0dc;
-  border-radius: 10px;
-  margin-right: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 }
 
 /* GRID */
@@ -67,6 +33,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 140px;
   counter-reset: li;
+  margin-top: 10px;
 }
 
 .GalleryItem {
@@ -117,6 +84,7 @@
   border: none;
   font-size: 16px;
   line-height: 1.5;
+  cursor: pointer;
 }
 
 .GalleryItem:nth-child(10n + 1),

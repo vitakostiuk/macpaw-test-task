@@ -6,10 +6,11 @@ import {
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { useState, useEffect } from 'react';
-import { ReactComponent as ArrowLeftBtn } from 'images/back-20.svg';
 import GalleryForm from './GalleryForm';
 import { getBreedsOptions } from 'utils/breedsOptions';
 import Header from '../Header';
+import BackBtn from 'components/common/BackBtn';
+import MainButton from 'components/common/MainButton';
 import s from '../Breeds/Breeds.module.css';
 
 const GalleryPage = () => {
@@ -131,12 +132,8 @@ const GalleryPage = () => {
       <Header handleSearchbarSubmit={handleSearchbarSubmit} />
       <div className={s.Paper}>
         <div className={s.BtnWrapper}>
-          <button type="button" className={s.LeftArrowBtn}>
-            <ArrowLeftBtn />
-          </button>
-          <button type="button" className={s.BigButton}>
-            GALLERY
-          </button>
+          <BackBtn />
+          <MainButton>VOTING</MainButton>
         </div>
         <GalleryForm onSubmit={addOptions} breedsOptions={breedsOptions} />
         {isLoading && (

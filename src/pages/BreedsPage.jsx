@@ -1,5 +1,5 @@
 import Section from 'components/common/Section';
-import Breeds from 'components/Breeds';
+import Breeds from '../components/Breeds';
 
 const BreedsPage = () => {
   return (
