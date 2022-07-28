@@ -11,6 +11,8 @@ import { getBreedsOptions } from 'utils/breedsOptions';
 import Header from '../Header';
 import BackBtn from 'components/common/BackBtn';
 import MainButton from 'components/common/MainButton';
+import { ReactComponent as UploadBtn } from 'images/upload-16.svg';
+import UploadImage from 'components/UploadImage';
 import s from '../Breeds/Breeds.module.css';
 
 const GalleryPage = () => {
@@ -24,6 +26,7 @@ const GalleryPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [resultByquery, setResultByquery] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   axios.defaults.headers.common['x-api-key'] =
     'b1dfeea4-d632-4776-b494-723bac3c8eb2';
@@ -126,14 +129,32 @@ const GalleryPage = () => {
     setQuery(name);
   };
 
+  const toogleModal = () => {
+    setShowModal(prevShowModal => !prevShowModal);
+  };
+
+  const handleClickImage = () => {
+    toogleModal();
+  };
+
   return (
     <>
       {' '}
       <Header handleSearchbarSubmit={handleSearchbarSubmit} />
       <div className={s.Paper}>
-        <div className={s.BtnWrapper}>
-          <BackBtn />
-          <MainButton>VOTING</MainButton>
+        <div className={`${s.BtnWrapper} ${s.BtnWrapperGallery}`}>
+          <div className={s.BigButtonWrapper}>
+            {' '}
+            <BackBtn />
+            <MainButton className={s.BigButton}>GALLERY</MainButton>
+          </div>
+          <div className={s.ButtonWrapper}>
+            {' '}
+            <MainButton className={s.BigLightButton} onClick={handleClickImage}>
+              <UploadBtn className={s.Svg} />
+              <span className={s.Text}>UPLOAD</span>
+            </MainButton>
+          </div>
         </div>
         <GalleryForm onSubmit={addOptions} breedsOptions={breedsOptions} />
         {isLoading && (
@@ -146,6 +167,8 @@ const GalleryPage = () => {
             />
           </div>
         )}
+
+        {showModal && <UploadImage onClose={toogleModal} />}
 
         {query && (
           <div className={s.ImgWrapper}>

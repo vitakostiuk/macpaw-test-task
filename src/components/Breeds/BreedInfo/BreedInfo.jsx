@@ -92,7 +92,9 @@ const BreedInfo = () => {
       <div className={s.Paper}>
         <div className={s.BtnWrapper}>
           <BackBtn />
-          <MainButton>BREEDS</MainButton>
+          <MainButton className={s.BigLightButton}>
+            <span className={s.BigLightBtnText}>BREEDS</span>
+          </MainButton>
         </div>
 
         {query && (

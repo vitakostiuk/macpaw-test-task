@@ -181,7 +181,10 @@ const BreedsPage = () => {
         {!isClickOnGalleryItem && (
           <div className={s.BtnWrapper}>
             <BackBtn />
-            <MainButton onClick={() => setName('All breeds')}>
+            <MainButton
+              onClick={() => setName('All breeds')}
+              className={s.BigButton}
+            >
               BREEDS
             </MainButton>
 

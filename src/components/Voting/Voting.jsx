@@ -178,7 +178,12 @@ const VotingBlock = () => {
       <div className={s.Paper}>
         <div className={s.BtnWrapper}>
           <BackBtn />
-          <MainButton onClick={() => setIsClickVoting(true)}>VOTING</MainButton>
+          <MainButton
+            onClick={() => setIsClickVoting(true)}
+            className={s.BigButton}
+          >
+            VOTING
+          </MainButton>
         </div>
 
         {isLoading && (
