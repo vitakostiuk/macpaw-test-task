@@ -138,7 +138,7 @@ const UploadImageForm = () => {
         <p className={s.StatusUpload}>No file selected</p>
       )}
 
-      {selectedFile && !error && (
+      {selectedFile && !error && !isLoading && (
         <>
           <p className={s.StatusUpload}>Image File Name: {selectedFile.name}</p>
           <button
