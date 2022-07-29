@@ -1,42 +1,56 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BallTriangle } from 'react-loader-spinner';
 import { ReactComponent as UploadSkeleton } from 'images/upload-bg.svg';
+import { ReactComponent as Success } from 'images/success-20.svg';
+import { ReactComponent as Error } from 'images/error-20.svg';
+import noCatFoundImg from 'images/dog-puppy-on-garden-royalty-free-image-1586966191 1.png';
 import s from './UploadImageForm.module.css';
 
 axios.defaults.headers.common['x-api-key'] =
   'b1dfeea4-d632-4776-b494-723bac3c8eb2';
 
 const UploadImageForm = () => {
-  // const [uploading, setUploading] = useState(false);
+  const [isClickUploadPhoto, setIsClickUploadPhoto] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uloadedImage, setUloadedImage] = useState({});
+  const [uploadedImage, setUploadedImage] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!selectedFile) return;
+
+    if (selectedFile) {
+      setIsLoading(true);
+    }
+
     const uploadImg = async () => {
-      // setUploading(true);
       let formData = new FormData();
       formData.append('file', selectedFile);
-      console.log(formData);
 
       try {
+        if (!formData) return;
+
         const response = await axios.post(
           'https://api.thecatapi.com/v1/images/upload',
           formData,
           { headers: { 'Content-Type': 'multipart/form-data' } },
         );
-        setUloadedImage(response.data);
+        setUploadedImage(response.data);
         console.log('response.data', response.data);
+
+        if (isClickUploadPhoto) {
+          setSelectedFile(null);
+        }
       } catch (error) {
         console.log(error);
         setError(error.response.data.message);
       } finally {
-        // setUploading(false);
-        setSelectedFile(null);
+        setIsLoading(false);
       }
     };
     uploadImg();
-  }, [selectedFile]);
+  }, [isClickUploadPhoto, selectedFile]);
 
   const onFileChange = e => {
     setSelectedFile(e.target.files[0]);
@@ -46,14 +60,50 @@ const UploadImageForm = () => {
     if (selectedFile) {
       return (
         <>
-          <p className={s.StatusUpload}>Image File Name: {selectedFile.name}</p>
-          <button type="button" className={s.UploadPhotoBtn}>
-            UPLOAD PHOTO
-          </button>
+          {isLoading && (
+            <div className={s.Loader}>
+              <BallTriangle
+                height="70"
+                width="70"
+                color="#ff868e"
+                ariaLabel="loading"
+              />
+            </div>
+          )}
+
+          {!isLoading && (
+            <div className={s.SkeletonWrapper}>
+              <img
+                src={uploadedImage.url}
+                alt={uploadedImage.original_filename}
+                className={s.UploadedPhoto}
+              />
+            </div>
+          )}
         </>
       );
     } else {
-      return <p className={s.StatusUpload}>No file selected</p>;
+      return (
+        <>
+          <input
+            type="file"
+            id="inputFile"
+            className={s.Input}
+            onChange={onFileChange}
+          />
+          <label htmlFor="inputFile" className={s.InputFileLabel}>
+            <span className={s.SkeletonWrapper}>
+              <UploadSkeleton className={s.Skeleton} />
+            </span>
+            <p className={s.TextOverSceleton}>
+              <span className={s.TextOverSceletonStrong}>Drag here </span>your
+              file or{' '}
+              <span className={s.TextOverSceletonStrong}>Click here </span>to
+              upload
+            </p>
+          </label>
+        </>
+      );
     }
   };
 
@@ -73,46 +123,53 @@ const UploadImageForm = () => {
         or face deletion.
       </h2>
 
-      {/* {uloadedImage && (
-        <div className={s.InputContainer}>
+      {error && (
+        <div className={s.ErrorContainer}>
           {' '}
-          <div className={s.InputContainer}>
-            <img src={uloadedImage.url} alt={uloadedImage.original_filename} />
+          <div className={s.SkeletonWrapper}>
+            <img src={noCatFoundImg} alt="No cat found" />
           </div>
         </div>
-      )} */}
+      )}
 
-      <div className={s.InputContainer}>
-        <input
-          type="file"
-          id="inputFile"
-          className={s.Input}
-          onChange={onFileChange}
-        />
-        <label htmlFor="inputFile" className={s.InputFileLabel}>
-          <span className={s.InputFileLabelIconWrapper}>
-            <UploadSkeleton className={s.Skeleton} />
-          </span>
-          <p className={s.TextOverSceleton}>
-            <span className={s.TextOverSceletonStrong}>Drag here </span>your
-            file or{' '}
-            <span className={s.TextOverSceletonStrong}>Click here </span>to
-            upload
-          </p>
-        </label>
-      </div>
-      {fileData()}
+      {!error && <div className={s.InputContainer}>{fileData()}</div>}
+
+      {!selectedFile && !error && (
+        <p className={s.StatusUpload}>No file selected</p>
+      )}
+
+      {selectedFile && !error && (
+        <>
+          <p className={s.StatusUpload}>Image File Name: {selectedFile.name}</p>
+          <button
+            type="button"
+            className={s.UploadPhotoBtn}
+            onClick={() => setIsClickUploadPhoto(true)}
+          >
+            UPLOAD PHOTO
+          </button>
+        </>
+      )}
+
+      {error && (
+        <>
+          {' '}
+          <p className={s.StatusUpload}>Image File Name: {selectedFile.name}</p>
+          <div className={s.StatusUploadWrap}>
+            <Error className={s.StatusIcon} />
+            <p className={s.StatusError}>No Cat found - try a different one</p>
+          </div>
+        </>
+      )}
+
+      {isClickUploadPhoto && !selectedFile && (
+        <div className={s.StatusUploadWrap}>
+          <Success className={s.StatusIcon} />
+          <p className={s.StatusSuccess}>Thanks for the Upload - Cat found!</p>
+        </div>
+      )}
     </>
   );
 };
 
 export default UploadImageForm;
-
-// <p>No file selected</p>
-// <button>UPLOAD PHOTO</button>
-// <div>
-//   <p>Thanks for the Upload - Cat found!</p>
-// </div>
-// <div>
-//   <p>No Cat found - try a different one</p>
-// </div>
