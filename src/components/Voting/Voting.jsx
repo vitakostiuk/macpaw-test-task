@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { BallTriangle } from 'react-loader-spinner';
 import { useState, useEffect } from 'react';
 import UserActionLogs from '../UserActionLogs';
 import { ReactComponent as Like } from 'images/like-white-30.svg';
 import { ReactComponent as Favorite } from 'images/fav-white-30.svg';
 import { ReactComponent as Dislike } from 'images/dislike-white-30.svg';
-import Header from '../Header';
-import BackBtn from 'components/common/BackBtn';
-import MainButton from 'components/common/MainButton';
+import TemplatePage from 'components/common/TemplatePage';
+import PageHeader from 'components/common/PageHeader';
+import Loader from 'components/common/Loader';
 import s from './Voting.module.css';
 
 const getTime = () => {
@@ -24,8 +23,6 @@ const VotingBlock = () => {
   const [isClickDislike, setIsClickDislike] = useState(false);
   const [isClickFavourite, setIsClickFavourite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState('');
-  const [resultByquery, setResultByquery] = useState({});
 
   axios.defaults.headers.common['x-api-key'] =
     'b1dfeea4-d632-4776-b494-723bac3c8eb2';
@@ -45,21 +42,6 @@ const VotingBlock = () => {
           setImageUrl(data[0].url);
           // console.log(cat);
         }
-
-        // Search by name
-        if (query) {
-          setOneRandonCat([]);
-          setActionLogs([]);
-          setImageUrl('');
-          let queryResult = await axios.get(
-            'https://api.thecatapi.com/v1/images/search',
-            {
-              params: { q: query },
-            },
-          );
-          console.log('queryResult', queryResult.data);
-          setResultByquery(queryResult.data[0]);
-        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -68,7 +50,7 @@ const VotingBlock = () => {
       }
     };
     fetchRandomCat();
-  }, [isClickVoting, query]);
+  }, [isClickVoting]);
 
   // Add LIKE
   useEffect(() => {
@@ -167,45 +149,21 @@ const VotingBlock = () => {
     addFavourite();
   }, [isClickFavourite, oneRandonCat]);
 
-  const handleSearchbarSubmit = name => {
-    setQuery(name);
+  const handleClickVoting = () => {
+    setIsClickVoting(true);
   };
 
   return (
     <>
-      {' '}
-      <Header handleSearchbarSubmit={handleSearchbarSubmit} />
-      <div className={s.Paper}>
-        <div className={s.BtnWrapper}>
-          <BackBtn />
-          <MainButton
-            onClick={() => setIsClickVoting(true)}
-            className={s.BigButton}
-          >
-            VOTING
-          </MainButton>
-        </div>
-
-        {isLoading && (
-          <div className={s.Loader}>
-            <BallTriangle
-              height="70"
-              width="70"
-              color="#ff868e"
-              ariaLabel="loading"
-            />
-          </div>
-        )}
+      <TemplatePage isLoading={isLoading}>
+        <PageHeader text="VOTING" onClick={handleClickVoting} />
 
         {imageUrl && (
           <div className={s.ImgWrapper}>
-            <img src={imageUrl} alt="cat" className={s.Img}></img>
-          </div>
-        )}
-
-        {query && (
-          <div className={s.ImgWrapper}>
-            <img src={resultByquery.url} alt="cat" className={s.Img} />
+            {isLoading && <Loader />}
+            {!isLoading && (
+              <img src={imageUrl} alt="cat" className={s.Img}></img>
+            )}
           </div>
         )}
 
@@ -248,7 +206,7 @@ const VotingBlock = () => {
             ))}
           </ul>
         }
-      </div>
+      </TemplatePage>
     </>
   );
 };

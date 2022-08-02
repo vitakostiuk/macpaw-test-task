@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Slider from 'react-slick';
 import { useParams } from 'react-router-dom';
-import Header from '../../Header';
-import BackBtn from 'components/common/BackBtn';
-import MainButton from 'components/common/MainButton';
+import TemplatePage from 'components/common/TemplatePage';
+import PageHeader from 'components/common/PageHeader';
+import Loader from 'components/common/Loader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import s from '../Breeds.module.css';
@@ -14,51 +14,51 @@ const BreedInfo = () => {
   const [allBreedsOptions, setAllBreedsOptions] = useState([]);
   const [findedBreed, setfindedBreed] = useState([]);
   const [imagesBreed, setImagesBreed] = useState([]);
-  const [query, setQuery] = useState('');
-  const [resultByquery, setResultByquery] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   let { id } = useParams();
 
   useEffect(() => {
     const getAllBreedOptions = async () => {
-      // Get all breeds options
-      let resultAll = await axios.get('https://api.thecatapi.com/v1/breeds');
-      setAllBreedsOptions(resultAll.data);
+      try {
+        setIsLoading(true);
+
+        // Get all breeds options
+        let resultAll = await axios.get('https://api.thecatapi.com/v1/breeds');
+        setAllBreedsOptions(resultAll.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     getAllBreedOptions();
   }, []);
 
   useEffect(() => {
     const getImagesBreed = async () => {
-      // Get one breed images
-      let { data } = await axios.get(
-        'https://api.thecatapi.com/v1/images/search',
-        {
-          params: { limit: 20, breed_id: id },
-        },
-      );
-      setImagesBreed(data);
-      console.log('getImgBreed', data);
+      try {
+        setIsLoading(true);
 
-      // Search by name
-      if (query) {
-        setImagesBreed([]);
-        setfindedBreed([]);
-        let queryResult = await axios.get(
+        // Get one breed images
+        let { data } = await axios.get(
           'https://api.thecatapi.com/v1/images/search',
           {
-            params: { q: query },
+            params: { limit: 20, breed_id: id },
           },
         );
-        console.log('queryResult', queryResult.data);
-        setResultByquery(queryResult.data[0]);
+        setImagesBreed(data);
+        // console.log('getImgBreed', data);
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
       }
     };
     getImagesBreed();
 
     const findBreed = allBreedsOptions.filter(oneBreed => id === oneBreed.id);
     setfindedBreed(findBreed);
-  }, [allBreedsOptions, id, query]);
+  }, [allBreedsOptions, id]);
 
   console.log('BreedInfo', allBreedsOptions);
 
@@ -82,34 +82,27 @@ const BreedInfo = () => {
     ),
   };
 
-  const handleSearchbarSubmit = name => {
-    setQuery(name);
-  };
-
   return (
     <>
-      <Header handleSearchbarSubmit={handleSearchbarSubmit} />
-      <div className={s.Paper}>
-        <div className={s.BtnWrapper}>
-          <BackBtn />
-          <MainButton className={s.BigLightButton}>
-            <span className={s.BigLightBtnText}>BREEDS</span>
-          </MainButton>
-        </div>
+      <TemplatePage>
+        <PageHeader
+          text="BREEDS"
+          classNameBigBtn={s.BigLightButton}
+          classNameText={s.BigLightBtnText}
+        />
 
-        {query && (
-          <div className={s.ImgWrapper}>
-            <img src={resultByquery.url} alt="cat" className={s.Img} />
-          </div>
+        {isLoading && <Loader />}
+
+        {!isLoading && (
+          <Slider {...settings}>
+            {imagesBreed.map(({ id, url }) => (
+              <div key={id} className={s.ImgWrapper}>
+                <img src={url} alt="cat" className={s.Img} />
+              </div>
+            ))}
+          </Slider>
         )}
 
-        <Slider {...settings}>
-          {imagesBreed.map(({ id, url }) => (
-            <div key={id} className={s.ImgWrapper}>
-              <img src={url} alt="cat" className={s.Img} />
-            </div>
-          ))}
-        </Slider>
         {findedBreed.map(
           ({
             bred_for = 'Family companion cat',
@@ -143,7 +136,7 @@ const BreedInfo = () => {
             </div>
           ),
         )}
-      </div>
+      </TemplatePage>
     </>
   );
 };

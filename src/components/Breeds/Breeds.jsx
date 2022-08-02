@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { BallTriangle } from 'react-loader-spinner';
 import {
   NotificationContainer,
   NotificationManager,
@@ -12,12 +11,11 @@ import { ReactComponent as SortAB } from 'images/sort-20.svg';
 import { ReactComponent as SortBA } from 'images/soft-revert-20.svg';
 import { limitImg } from '../../data/options';
 import { getBreedsOptions } from 'utils/breedsOptions';
-import BackBtn from 'components/common/BackBtn';
-import MainButton from 'components/common/MainButton';
-import Header from '../Header';
+import TemplatePage from 'components/common/TemplatePage';
 import BreedGallery from './BreedGallery';
 import BreedInfo from './BreedInfo';
-// import BreedInfoPage from 'pages/BreedInfoPage';
+import PageHeader from 'components/common/PageHeader';
+import Loader from 'components/common/Loader';
 import s from './Breeds.module.css';
 
 const BreedsPage = () => {
@@ -31,8 +29,6 @@ const BreedsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isClickOnGalleryItem, setIsClickOnGalleryItem] = useState(false);
   const [hiddenBtn, setHiddenBtn] = useState(true);
-  const [query, setQuery] = useState('');
-  const [resultByquery, setResultByquery] = useState({});
 
   axios.defaults.headers.common['x-api-key'] =
     'b1dfeea4-d632-4776-b494-723bac3c8eb2';
@@ -77,20 +73,6 @@ const BreedsPage = () => {
             { name, id, image },
           ]),
         );
-
-        // Search by name
-        if (query) {
-          setAllBreeds([]);
-          setBreed([]);
-          let queryResult = await axios.get(
-            'https://api.thecatapi.com/v1/images/search',
-            {
-              params: { q: query },
-            },
-          );
-          console.log('Search by name', queryResult.data);
-          setResultByquery(queryResult.data[0]);
-        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -99,7 +81,7 @@ const BreedsPage = () => {
       }
     };
     getAllBreeds();
-  }, [limit, name, page, query, typeOfSort]);
+  }, [limit, name, page, typeOfSort]);
 
   // ---- GET ONE BREED
   useEffect(() => {
@@ -165,29 +147,20 @@ const BreedsPage = () => {
     }
   };
 
-  const handleSearchbarSubmit = name => {
-    setQuery(name);
-  };
-
   const handleClickOnGalleryItem = () => {
     setIsClickOnGalleryItem(true);
     setHiddenBtn(true);
   };
 
+  const handleClickBreeds = () => {
+    setName('All breeds');
+  };
+
   return (
     <>
-      <Header handleSearchbarSubmit={handleSearchbarSubmit} />
-      <div className={s.Paper}>
+      <TemplatePage isLoading={isLoading}>
         {!isClickOnGalleryItem && (
-          <div className={s.BtnWrapper}>
-            <BackBtn />
-            <MainButton
-              onClick={() => setName('All breeds')}
-              className={s.BigButton}
-            >
-              BREEDS
-            </MainButton>
-
+          <PageHeader text="BREEDS" onClick={handleClickBreeds}>
             <select
               name="breed"
               onChange={handleChange}
@@ -228,29 +201,14 @@ const BreedsPage = () => {
                 </button>
               </>
             )}
-          </div>
+          </PageHeader>
         )}
 
-        {isLoading && (
-          <div className={s.Loader}>
-            <BallTriangle
-              height="70"
-              width="70"
-              color="#ff868e"
-              ariaLabel="loading"
-            />
-          </div>
-        )}
+        {isLoading && <Loader />}
 
-        {query && (
-          <div className={s.ImgWrapper}>
-            <img src={resultByquery.url} alt="cat" className={s.Img} />
-          </div>
-        )}
+        {breed && !isLoading && <BreedGallery name={name} breed={breed} />}
 
-        {breed && <BreedGallery name={name} breed={breed} />}
-
-        {allBreeds && !isClickOnGalleryItem && (
+        {allBreeds && !isLoading && !isClickOnGalleryItem && (
           <>
             <ul className={s.GalleryWrap}>
               {allBreeds.map(({ name, id, image }) => (
@@ -271,7 +229,6 @@ const BreedsPage = () => {
                   )}
                 </li>
               ))}
-              {/* <Outlet /> */}
             </ul>
           </>
         )}
@@ -293,7 +250,7 @@ const BreedsPage = () => {
           </div>
         )}
         <NotificationContainer />
-      </div>
+      </TemplatePage>
     </>
   );
 };

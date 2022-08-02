@@ -1,35 +1,5 @@
-.Paper {
-  position: relative;
-  background-color: #ffffff;
-  border-radius: 20px;
-  margin-top: 10px;
-  padding: 20px;
-}
-
-.BigButton {
-  display: inline-block;
-  width: 146px;
-  height: 40px;
-  background-color: var(--accent-color);
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.5;
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.BigButtonWrapper {
-  display: flex;
-}
-
+/* breed info page */
 .BigLightButton {
-  composes: BigButton;
   display: inline-block;
   width: 143px;
   background-color: #fbe0dc;
@@ -51,26 +21,6 @@
   font-size: 20px;
   line-height: 1.5;
   letter-spacing: 2px;
-}
-
-.Svg {
-  margin-right: 5px;
-}
-
-.Text {
-  margin-left: 5px;
-}
-
-.Loader {
-  display: flex;
-  width: 100%;
-  margin-top: 20px;
-  align-items: center;
-  justify-content: center;
-}
-
-.BtnWrapper {
-  display: flex;
 }
 
 .BtnWrapperGallery {

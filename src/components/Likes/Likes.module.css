@@ -1,3 +1,15 @@
+.Paper {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 20px;
+}
+
+.BtnWrapper {
+  display: flex;
+}
+
 .BigButton {
   display: inline-block;
   width: 146px;
@@ -7,16 +19,6 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.5;
-  text-align: center;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.Text {
   font-style: normal;
   font-weight: 500;
   font-size: 20px;

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { BallTriangle } from 'react-loader-spinner';
 import {
   NotificationContainer,
   NotificationManager,
@@ -8,14 +7,16 @@ import 'react-notifications/lib/notifications.css';
 import { useState, useEffect } from 'react';
 import GalleryForm from './GalleryForm';
 import { getBreedsOptions } from 'utils/breedsOptions';
-import Header from '../Header';
-import BackBtn from 'components/common/BackBtn';
+import TemplatePage from 'components/common/TemplatePage';
+import PageHeader from 'components/common/PageHeader';
 import MainButton from 'components/common/MainButton';
 import { ReactComponent as UploadBtn } from 'images/upload-16.svg';
 import UploadImage from 'components/UploadImage';
+import Loader from 'components/common/Loader';
+import css from './Gallery.module.css';
 import s from '../Breeds/Breeds.module.css';
 
-const GalleryPage = () => {
+const Gallery = () => {
   const [breedsOptions, setBreedsOptions] = useState([]);
   const [singleBreed, setSingleBreed] = useState([]);
   const [randomBreeds, setRandomBreeds] = useState([]);
@@ -24,8 +25,6 @@ const GalleryPage = () => {
   const [type, setType] = useState('');
   const [limit, setLimit] = useState(20);
   const [isLoading, setIsLoading] = useState(false);
-  const [query, setQuery] = useState('');
-  const [resultByquery, setResultByquery] = useState({});
   const [showModal, setShowModal] = useState(false);
 
   axios.defaults.headers.common['x-api-key'] =
@@ -57,20 +56,6 @@ const GalleryPage = () => {
         );
         console.log('result', result);
         setRandomBreeds(result.data);
-
-        // Search by name
-        if (query) {
-          setSingleBreed([]);
-          setRandomBreeds([]);
-          let queryResult = await axios.get(
-            'https://api.thecatapi.com/v1/images/search',
-            {
-              params: { q: query },
-            },
-          );
-          console.log('queryResult', queryResult.data);
-          setResultByquery(queryResult.data[0]);
-        }
       } catch (error) {
         console.log(error);
       } finally {
@@ -78,7 +63,7 @@ const GalleryPage = () => {
       }
     };
     getBreeds();
-  }, [query]);
+  }, []);
 
   useEffect(() => {
     if (!breed) return;
@@ -125,10 +110,6 @@ const GalleryPage = () => {
     setLimit(limit);
   };
 
-  const handleSearchbarSubmit = name => {
-    setQuery(name);
-  };
-
   const toogleModal = () => {
     setShowModal(prevShowModal => !prevShowModal);
   };
@@ -139,44 +120,25 @@ const GalleryPage = () => {
 
   return (
     <>
-      {' '}
-      <Header handleSearchbarSubmit={handleSearchbarSubmit} />
-      <div className={s.Paper}>
-        <div className={`${s.BtnWrapper} ${s.BtnWrapperGallery}`}>
-          <div className={s.BigButtonWrapper}>
-            {' '}
-            <BackBtn />
-            <MainButton className={s.BigButton}>GALLERY</MainButton>
-          </div>
-          <div className={s.ButtonWrapper}>
-            {' '}
-            <MainButton className={s.BigLightButton} onClick={handleClickImage}>
-              <UploadBtn className={s.Svg} />
-              <span className={s.Text}>UPLOAD</span>
-            </MainButton>
-          </div>
-        </div>
+      <TemplatePage isLoading={isLoading}>
+        <PageHeader text="GALLERY">
+          <MainButton
+            classNameBigBtn={css.BigLightButton}
+            onClick={handleClickImage}
+            classNameText={css.BigLightBtnText}
+            text="UPLOAD"
+          >
+            <UploadBtn className={css.Svg} />
+          </MainButton>
+        </PageHeader>
+
         <GalleryForm onSubmit={addOptions} breedsOptions={breedsOptions} />
-        {isLoading && (
-          <div className={s.Loader}>
-            <BallTriangle
-              height="70"
-              width="70"
-              color="#ff868e"
-              ariaLabel="loading"
-            />
-          </div>
-        )}
+
+        {isLoading && <Loader />}
 
         {showModal && <UploadImage onClose={toogleModal} />}
 
-        {query && (
-          <div className={s.ImgWrapper}>
-            <img src={resultByquery.url} alt="cat" className={s.Img} />
-          </div>
-        )}
-
-        {randomBreeds && (
+        {randomBreeds && !isLoading && (
           <ul className={s.GalleryWrap}>
             {randomBreeds.map(item => (
               <li key={item.id} className={s.GalleryItem}>
@@ -190,7 +152,7 @@ const GalleryPage = () => {
           </ul>
         )}
 
-        {singleBreed && (
+        {singleBreed && !isLoading && (
           <ul className={s.GalleryWrap}>
             {singleBreed.map(item => (
               <li key={item.id} className={s.GalleryItem}>
@@ -204,9 +166,9 @@ const GalleryPage = () => {
           </ul>
         )}
         <NotificationContainer />
-      </div>
+      </TemplatePage>
     </>
   );
 };
 
-export default GalleryPage;
+export default Gallery;

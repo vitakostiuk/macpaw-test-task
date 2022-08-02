@@ -1,0 +1,27 @@
+.BigLightButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 291px;
+  background-color: #fbe0dc;
+  color: var(--accent-color);
+}
+
+.BigLightBtnText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 2px;
+}
+
+.Svg {
+  margin-right: 5px;
+}
+
+/* .Text {
+  margin-left: 5px;
+} */

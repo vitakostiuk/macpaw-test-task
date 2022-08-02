@@ -1,19 +1,25 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as SearchSvg } from 'images/search-20.svg';
 import PropTypes from 'prop-types';
 import s from './SearchBar.module.css';
 
-const SearchBar = ({ handleSearchbarSubmit }) => {
+const SearchBar = () => {
   const [query, setQuery] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    // 👇️ redirect to /contacts
+    navigate('/search', { state: { query } });
 
     if (query.trim() === '') {
       alert('Search bar is empty! Please, enter a text.');
       return;
     }
-    handleSearchbarSubmit(query);
+    // handleSearchbarSubmit(query);
     setQuery('');
     e.target.reset();
   };
@@ -35,7 +41,7 @@ const SearchBar = ({ handleSearchbarSubmit }) => {
 };
 
 SearchBar.propTypes = {
-  handleSearchbarSubmit: PropTypes.func.isRequired,
+  handleSearchbarSubmit: PropTypes.func,
 };
 
 export default SearchBar;
