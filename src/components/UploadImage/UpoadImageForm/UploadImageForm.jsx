@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import * as api from 'services/api-cat';
 import { BallTriangle } from 'react-loader-spinner';
 import { ReactComponent as UploadSkeleton } from 'images/upload-bg.svg';
 import { ReactComponent as Success } from 'images/success-20.svg';
 import { ReactComponent as Error } from 'images/error-20.svg';
 import noCatFoundImg from 'images/dog-puppy-on-garden-royalty-free-image-1586966191 1.png';
 import s from './UploadImageForm.module.css';
-
-axios.defaults.headers.common['x-api-key'] =
-  'b1dfeea4-d632-4776-b494-723bac3c8eb2';
 
 const UploadImageForm = () => {
   const [isClickUploadPhoto, setIsClickUploadPhoto] = useState(false);
@@ -31,20 +28,18 @@ const UploadImageForm = () => {
       try {
         if (!formData) return;
 
-        const response = await axios.post(
-          'https://api.thecatapi.com/v1/images/upload',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } },
-        );
-        setUploadedImage(response.data);
-        console.log('response.data', response.data);
+        const uploadPhoto = await api.uploadData('/images/upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        setUploadedImage(uploadPhoto);
+        // console.log('uploadPhoto', uploadPhoto);
 
         if (isClickUploadPhoto) {
           setSelectedFile(null);
         }
       } catch (error) {
         console.log(error);
-        setError(error.response.data.message);
+        setError(error);
       } finally {
         setIsLoading(false);
       }

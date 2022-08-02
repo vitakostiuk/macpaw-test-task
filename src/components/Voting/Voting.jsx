@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as api from 'services/api-cat';
 import { useState, useEffect } from 'react';
 import UserActionLogs from '../UserActionLogs';
 import { ReactComponent as Like } from 'images/like-white-30.svg';
@@ -24,9 +24,6 @@ const VotingBlock = () => {
   const [isClickFavourite, setIsClickFavourite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  axios.defaults.headers.common['x-api-key'] =
-    'b1dfeea4-d632-4776-b494-723bac3c8eb2';
-
   // First fetch random cat and fetch after each click on button VOTING
   useEffect(() => {
     const fetchRandomCat = async () => {
@@ -34,13 +31,10 @@ const VotingBlock = () => {
         setIsLoading(true);
 
         if (isClickVoting) {
-          ///////////
-          let { data } = await axios.get(
-            'https://api.thecatapi.com/v1/images/search',
-          );
-          setOneRandonCat(data);
-          setImageUrl(data[0].url);
-          // console.log(cat);
+          let randomImg = await api.getData('/images/search');
+          setOneRandonCat(randomImg);
+          setImageUrl(randomImg[0].url);
+          // console.log('randomImg', randomImg);
         }
       } catch (error) {
         console.log(error);
@@ -59,16 +53,12 @@ const VotingBlock = () => {
       try {
         if (isClickLike) {
           // Click like
-          let body = {
+          await api.postData('/votes', {
             image_id: oneRandonCat[0].id,
             sub_id: 'User-123',
             value: 1,
-          };
-          let { data } = await axios.post(
-            'https://api.thecatapi.com/v1/votes',
-            body,
-          );
-          console.log(data);
+          });
+
           setActionLogs(prevActionLogs => [
             { time: getTime(), id: oneRandonCat[0].id, emoji: 'Likes' },
             ...prevActionLogs,
@@ -92,16 +82,12 @@ const VotingBlock = () => {
       try {
         if (isClickDislike) {
           // Click Dislike
-          let body = {
+          await api.postData('/votes', {
             image_id: oneRandonCat[0].id,
             sub_id: 'User-123',
             value: 0,
-          };
-          let { data } = await axios.post(
-            'https://api.thecatapi.com/v1/votes',
-            body,
-          );
-          console.log(data);
+          });
+
           setActionLogs(prevActionLogs => [
             { time: getTime(), id: oneRandonCat[0].id, emoji: 'Dislikes' },
             ...prevActionLogs,
@@ -125,15 +111,11 @@ const VotingBlock = () => {
       try {
         if (isClickFavourite) {
           // Click Dislike
-          let body = {
+          await api.postData('/favourites', {
             image_id: oneRandonCat[0].id,
             sub_id: 'User-123',
-          };
-          let { data } = await axios.post(
-            'https://api.thecatapi.com/v1/favourites',
-            body,
-          );
-          console.log(data);
+          });
+
           setActionLogs(prevActionLogs => [
             { time: getTime(), id: oneRandonCat[0].id, emoji: 'Favourites' },
             ...prevActionLogs,

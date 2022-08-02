@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as api from 'services/api-cat';
 import {
   NotificationContainer,
   NotificationManager,
@@ -30,9 +30,6 @@ const BreedsPage = () => {
   const [isClickOnGalleryItem, setIsClickOnGalleryItem] = useState(false);
   const [hiddenBtn, setHiddenBtn] = useState(true);
 
-  axios.defaults.headers.common['x-api-key'] =
-    'b1dfeea4-d632-4776-b494-723bac3c8eb2';
-
   // ---- GET ALL BREEDS
   useEffect(() => {
     if (name !== 'All breeds') {
@@ -45,10 +42,10 @@ const BreedsPage = () => {
         setIsLoading(true);
 
         // Update state --breedsOptions--
-        let resultAll = await axios.get('https://api.thecatapi.com/v1/breeds');
-        console.log('breedsOptions', resultAll.data);
+        let resultAll = await api.getData('/breeds');
+        // console.log('resultAll', resultAll);
         setBreedsOptions(
-          getBreedsOptions(resultAll.data, {
+          getBreedsOptions(resultAll, {
             label: 'All breeds',
             value: 'All breeds',
             id: '',
@@ -57,17 +54,17 @@ const BreedsPage = () => {
 
         setAllBreeds([]);
         // Update state --allBreeds-- and render all breeds
-        let { data } = await axios.get('https://api.thecatapi.com/v1/breeds', {
+        let updateAllBreeds = await api.getData('/breeds', {
           params: { limit, page, order: typeOfSort },
         });
-        console.log('allBreeds', data);
-        if (data.length === 0) {
+        // console.log('updateAllBreeds', updateAllBreeds);
+        if (updateAllBreeds === 0) {
           setHiddenBtn(false);
-          NotificationManager.warning(`There are not images!`);
+          NotificationManager.warning(`There are no images!`);
           return setAllBreeds([]);
         }
 
-        data.map(({ name, id, image }) =>
+        updateAllBreeds.map(({ name, id, image }) =>
           setAllBreeds(prevAllBreeds => [
             ...prevAllBreeds,
             { name, id, image },
@@ -101,23 +98,20 @@ const BreedsPage = () => {
           breed => breed.label === name,
         );
         const findedId = findBreedByName.id;
-        console.log('findedId', findedId);
+        // console.log('findedId', findedId);
 
         // Update state --breed-- and render one breed's images
         setBreed([]);
-        //////////
-        let { data } = await axios.get(
-          'https://api.thecatapi.com/v1/images/search',
-          {
-            params: { limit, breed_id: findedId },
-          },
-        );
-        console.log('data for single breed', data);
-        if (data.length === 0) {
-          NotificationManager.warning(`There are not already images!`);
+
+        let oneBreedImgs = await api.getData('/images/search', {
+          params: { limit, breed_id: findedId },
+        });
+        // console.log('oneBreedImgs', oneBreedImgs);
+        if (oneBreedImgs.length === 0) {
+          NotificationManager.warning(`There are no images!`);
           return setBreed([]);
         }
-        setBreed(data);
+        setBreed(oneBreedImgs);
       } catch (error) {
         console.log(error);
       } finally {

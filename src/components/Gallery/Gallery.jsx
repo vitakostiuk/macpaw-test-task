@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as api from 'services/api-cat';
 import {
   NotificationContainer,
   NotificationManager,
@@ -27,9 +27,6 @@ const Gallery = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  axios.defaults.headers.common['x-api-key'] =
-    'b1dfeea4-d632-4776-b494-723bac3c8eb2';
-
   useEffect(() => {
     const getBreeds = async () => {
       try {
@@ -37,10 +34,10 @@ const Gallery = () => {
         setSingleBreed([]);
 
         // Update state --breedsOptions--
-        let { data } = await axios.get('https://api.thecatapi.com/v1/breeds');
-        console.log('data breedsOptions', data);
+        let resultAll = await api.getData('/breeds');
+        // console.log('resultAll', resultAll);
         setBreedsOptions(
-          getBreedsOptions(data, {
+          getBreedsOptions(resultAll, {
             label: 'None',
             value: 'None',
             id: '',
@@ -48,14 +45,11 @@ const Gallery = () => {
         );
 
         // Get first random render
-        let result = await axios.get(
-          'https://api.thecatapi.com/v1/images/search',
-          {
-            params: { limit: 20 },
-          },
-        );
-        console.log('result', result);
-        setRandomBreeds(result.data);
+        let firstRandonRender = await api.getData('/images/search', {
+          params: { limit: 20 },
+        });
+        // console.log('firstRandonRender', firstRandonRender);
+        setRandomBreeds(firstRandonRender);
       } catch (error) {
         console.log(error);
       } finally {
@@ -82,18 +76,15 @@ const Gallery = () => {
         console.log('findedId', findedId);
 
         // Get Single breed with options
-        let { data } = await axios.get(
-          'https://api.thecatapi.com/v1/images/search',
-          {
-            params: { limit, breed_id: findedId, order, type },
-          },
-        );
-        console.log('data Single breed', data);
-        if (data.length === 0) {
+        let singleBreed = await api.getData('/images/search', {
+          params: { limit, breed_id: findedId, order, type },
+        });
+        // console.log('singleBreed', singleBreed);
+        if (singleBreed.length === 0) {
           NotificationManager.warning(`There are not images!`);
           return setSingleBreed([]);
         }
-        setSingleBreed(data);
+        setSingleBreed(singleBreed);
       } catch (error) {
         console.log(error);
       } finally {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as api from 'services/api-cat';
 import Slider from 'react-slick';
 import { useParams } from 'react-router-dom';
 import TemplatePage from 'components/common/TemplatePage';
@@ -6,7 +6,7 @@ import PageHeader from 'components/common/PageHeader';
 import Loader from 'components/common/Loader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import s from '../Breeds.module.css';
+import s from '../../Search/Search.module.css';
 import './BreedInfo.css';
 import { useState, useEffect } from 'react';
 
@@ -24,8 +24,9 @@ const BreedInfo = () => {
         setIsLoading(true);
 
         // Get all breeds options
-        let resultAll = await axios.get('https://api.thecatapi.com/v1/breeds');
-        setAllBreedsOptions(resultAll.data);
+        let resultAll = await api.getData('/breeds');
+        setAllBreedsOptions(resultAll);
+        // console.log('resultAll', resultAll);
       } catch (error) {
         console.log(error);
       } finally {
@@ -40,15 +41,12 @@ const BreedInfo = () => {
       try {
         setIsLoading(true);
 
-        // Get one breed images
-        let { data } = await axios.get(
-          'https://api.thecatapi.com/v1/images/search',
-          {
-            params: { limit: 20, breed_id: id },
-          },
-        );
-        setImagesBreed(data);
-        // console.log('getImgBreed', data);
+        // Get one breed's images
+        let oneBreedImgs = await api.getData('/images/search', {
+          params: { limit: 20, breed_id: id },
+        });
+        setImagesBreed(oneBreedImgs);
+        // console.log('oneBreedImgs', oneBreedImgs);
       } catch (error) {
       } finally {
         setIsLoading(false);
@@ -59,8 +57,6 @@ const BreedInfo = () => {
     const findBreed = allBreedsOptions.filter(oneBreed => id === oneBreed.id);
     setfindedBreed(findBreed);
   }, [allBreedsOptions, id]);
-
-  console.log('BreedInfo', allBreedsOptions);
 
   // Settings for slider
   const settings = {

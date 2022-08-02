@@ -126,6 +126,7 @@
   text-align: center;
   letter-spacing: 2px;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .StatusUploadWrap {

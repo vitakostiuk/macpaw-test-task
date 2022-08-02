@@ -1,78 +1,23 @@
-// const BASE_URL = 'https://api.thecatapi.com/v1';
-// const API_KEY = 'b1dfeea4-d632-4776-b494-723bac3c8eb2';
+import axios from 'axios';
 
-// const fetchData = async (endpoint, options = {}) => {
-//   const res = await fetch(
-//     `${BASE_URL}/${endpoint}?api_key=${API_KEY}`,
-//     options,
-//   );
-//   return res.ok ? res.json() : Promise.reject(new Error(res.statusText));
-// };
+axios.defaults.headers.common['x-api-key'] =
+  'b1dfeea4-d632-4776-b494-723bac3c8eb2';
 
-// const fetchDataPagination = async (
-//   endpoint,
-//   limit = null,
-//   page = null,
-//   breed_id = '',
-//   order = '',
-//   mime_types = '',
-//   options = {},
-// ) => {
-//   const queryParams = new URLSearchParams({
-//     api_key: 'b1dfeea4-d632-4776-b494-723bac3c8eb2',
-//     limit,
-//     page,
-//     breed_id,
-//     order,
-//     mime_types,
-//   });
+axios.defaults.baseURL = 'https://api.thecatapi.com/v1';
 
-//   const res = await fetch(`${BASE_URL}/${endpoint}?${queryParams}`, options);
-//   return res.ok ? res.json() : Promise.reject(new Error(res.statusText));
-// };
+const getData = async (endpoint, params = {}) => {
+  let { data } = await axios.get(`${endpoint}`, params);
+  return data;
+};
 
-// const getData = (endpoint, options = {}) => fetchData(endpoint, { ...options });
+const postData = async (endpoint, body = {}) => {
+  let { data } = await axios.post(`${endpoint}`, body);
+  return data;
+};
 
-// const getSingleBreed = (
-//   endpoint,
-//   limit = null,
-//   id = '',
-//   order = '',
-//   mime_types = '',
-//   options = {},
-// ) =>
-//   fetchDataPagination(endpoint, limit, id, order, mime_types, {
-//     ...options,
-//   });
+const uploadData = async (endpoint, formData, headers = {}) => {
+  let { data } = await axios.post(`${endpoint}`, formData, headers);
+  return data;
+};
 
-// const getBreeds = (
-//   endpoint,
-//   limit = null,
-//   page = null,
-//   id = '',
-//   order = '',
-//   mime_types = '',
-//   options = {},
-// ) =>
-//   fetchDataPagination(endpoint, limit, page, id, order, mime_types, {
-//     ...options,
-//   });
-
-// const addVote = (endpoint, data, options = {}) => {
-//   const finalOptions = {
-//     method: 'POST',
-//     body: JSON.stringify(data),
-//     headers: {
-//       'Content-Type': 'application/json; charset=UTF-8',
-//     },
-//     ...options,
-//   };
-//   return fetchData(endpoint, finalOptions);
-// };
-
-// export {
-//   getData,
-//   addVote,
-//   getBreeds,
-//   getSingleBreed,
-// };
+export { getData, postData, uploadData };

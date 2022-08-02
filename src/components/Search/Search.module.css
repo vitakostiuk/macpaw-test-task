@@ -1,0 +1,34 @@
+.ResultWrapper {
+  margin-top: 20px;
+}
+
+.Text {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.45;
+  color: var(--text-color);
+}
+
+.BoldText {
+  composes: Text;
+  font-weight: 500;
+  color: #1d1d1d;
+}
+
+.ImgWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 640px;
+  height: 360px;
+  margin-top: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.Img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
