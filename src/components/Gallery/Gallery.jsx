@@ -13,8 +13,8 @@ import MainButton from 'components/common/MainButton';
 import { ReactComponent as UploadBtn } from 'images/upload-16.svg';
 import UploadImage from 'components/UploadImage';
 import Loader from 'components/common/Loader';
-import css from './Gallery.module.css';
-import s from '../Breeds/Breeds.module.css';
+import s from './Gallery.module.css';
+import cssGrid from 'styles/cssGrid.module.css';
 
 const Gallery = () => {
   const [breedsOptions, setBreedsOptions] = useState([]);
@@ -114,12 +114,12 @@ const Gallery = () => {
       <TemplatePage isLoading={isLoading}>
         <PageHeader text="GALLERY">
           <MainButton
-            classNameBigBtn={css.BigLightButton}
+            classNameBigBtn={s.BigLightButton}
             onClick={handleClickImage}
-            classNameText={css.BigLightBtnText}
+            classNameText={setBreedsOptions.BigLightBtnText}
             text="UPLOAD"
           >
-            <UploadBtn className={css.Svg} />
+            <UploadBtn className={s.Svg} />
           </MainButton>
         </PageHeader>
 
@@ -130,13 +130,13 @@ const Gallery = () => {
         {showModal && <UploadImage onClose={toogleModal} />}
 
         {randomBreeds && !isLoading && (
-          <ul className={s.GalleryWrap}>
+          <ul className={cssGrid.GalleryWrap}>
             {randomBreeds.map(item => (
-              <li key={item.id} className={s.GalleryItem}>
+              <li key={item.id} className={cssGrid.GalleryItem}>
                 {item ? (
-                  <img src={item.url} alt={breed} className={s.Img} />
+                  <img src={item.url} alt={breed} className={cssGrid.Img} />
                 ) : (
-                  <div className={s.ImgNotFound}>Image not found</div>
+                  <div className={cssGrid.ImgNotFound}>Image not found</div>
                 )}
               </li>
             ))}
@@ -144,13 +144,13 @@ const Gallery = () => {
         )}
 
         {singleBreed && !isLoading && (
-          <ul className={s.GalleryWrap}>
+          <ul className={cssGrid.GalleryWrap}>
             {singleBreed.map(item => (
-              <li key={item.id} className={s.GalleryItem}>
+              <li key={item.id} className={cssGrid.GalleryItem}>
                 {item ? (
-                  <img src={item.url} alt={breed} className={s.Img} />
+                  <img src={item.url} alt={breed} className={cssGrid.Img} />
                 ) : (
-                  <div className={s.ImgNotFound}>Image not found</div>
+                  <div className={cssGrid.ImgNotFound}>Image not found</div>
                 )}
               </li>
             ))}

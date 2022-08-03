@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import s from '../Breeds.module.css';
+import cssGrid from 'styles/cssGrid.module.css';
 
 const BreedGallery = ({ name, breed }) => {
   return (
     <>
-      <ul className={s.GalleryWrap}>
+      <ul className={cssGrid.GalleryWrap}>
         {breed.map(({ id, url }) => (
-          <li key={id} className={s.GalleryItem}>
-            <img src={url} alt={name} className={s.Img} />
+          <li key={id} className={cssGrid.GalleryItem}>
+            <img src={url} alt={name} className={cssGrid.Img} />
           </li>
         ))}
       </ul>

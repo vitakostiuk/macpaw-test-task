@@ -15,8 +15,6 @@ const NavItem = ({ name, image, backgroundColor, path }) => {
       <Button>
         <NavLink
           to={path}
-          // className={s.BtnText}
-          // activeClassName={s.BtnTextActive}
           className={({ isActive }) => (isActive ? s.BtnTextActive : s.BtnText)}
         >
           {name}

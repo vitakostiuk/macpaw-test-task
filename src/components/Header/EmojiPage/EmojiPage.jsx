@@ -1,25 +1,32 @@
-import { ReactComponent as Like } from '../../../images/like-color-30.svg';
-import { ReactComponent as Favorite } from '../../../images/fav-color-30.svg';
-import { ReactComponent as Dislike } from '../../../images/dislike-color-30.svg';
+import { NavLink } from 'react-router-dom';
 import s from './EmojiPage.module.css';
 
 const EmojiPage = () => {
   return (
     <ul className={s.EmojiPage}>
       <li className={s.Item}>
-        <a href="/" className={s.Link}>
-          <Like />
-        </a>
+        <NavLink
+          to="/likes"
+          className={({ isActive }) =>
+            isActive ? s.LikeLinkActive : s.LikeLink
+          }
+        ></NavLink>
       </li>
       <li className={s.Item}>
-        <a href="/" className={s.Link}>
-          <Favorite />
-        </a>
+        <NavLink
+          to="/favourites"
+          className={({ isActive }) =>
+            isActive ? s.FavouriteLinkActive : s.FavouriteLink
+          }
+        ></NavLink>
       </li>
       <li className={s.Item}>
-        <a href="/" className={s.Link}>
-          <Dislike />
-        </a>
+        <NavLink
+          to="/dislikes"
+          className={({ isActive }) =>
+            isActive ? s.DislikeLinkActive : s.DislikeLink
+          }
+        ></NavLink>
       </li>
     </ul>
   );

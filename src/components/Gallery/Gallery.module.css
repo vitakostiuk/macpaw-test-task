@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 291px;
+  margin-left: 249px;
   background-color: #fbe0dc;
   color: var(--accent-color);
 }
@@ -21,7 +21,3 @@
 .Svg {
   margin-right: 5px;
 }
-
-/* .Text {
-  margin-left: 5px;
-} */

@@ -6,8 +6,8 @@ import Loader from 'components/common/Loader';
 import cssGrid from 'styles/cssGrid.module.css';
 import css from 'styles/itemNotFound.module.css';
 
-const Likes = () => {
-  const [likes, setLikes] = useState([]);
+const Dislikes = () => {
+  const [dislikes, setDislikes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isClickImg, setIsClickImg] = useState(false);
   const [imgId, setImgId] = useState('');
@@ -21,15 +21,14 @@ const Likes = () => {
         const allVotes = await api.getData('/votes', {
           params: { sub_id: 'User-123' },
         });
-        console.log('allVotes', allVotes);
-
-        const likesVotes = allVotes.filter(vote => vote.value === 1);
-        setLikes(likesVotes);
-        console.log('likesVotes', likesVotes);
+        // console.log('allVotes', allVotes);
+        const dislikesVotes = allVotes.filter(vote => vote.value === 0);
+        setDislikes(dislikesVotes);
+        // console.log('dislikesVote', dislikesVotes);
 
         // Delete vote
         if (isClickImg) {
-          const dataForDelete = likesVotes.find(vote => vote.id === imgId);
+          const dataForDelete = dislikesVotes.find(vote => vote.id === imgId);
           console.log('dataForDelete', dataForDelete);
 
           const deleteVote = await api.deleteVote('/votes', dataForDelete.id);
@@ -43,22 +42,22 @@ const Likes = () => {
       }
     };
     getAllVoting();
-  }, [imgId, isClickImg, likes.length]);
+  }, [imgId, isClickImg]);
 
   const handleClickImg = id => {
     setIsClickImg(true);
     setImgId(id);
   };
-
   return (
     <>
       <TemplatePage>
-        <PageHeader text="LIKES" />
+        <PageHeader text="DISLIKES" />
+
         {isLoading && <Loader />}
 
-        {likes && !isLoading && (
+        {dislikes && !isLoading && (
           <ul className={cssGrid.GalleryWrap}>
-            {likes.map(item => (
+            {dislikes.map(item => (
               <li
                 key={item.id}
                 className={cssGrid.GalleryItem}
@@ -67,7 +66,7 @@ const Likes = () => {
                 {item ? (
                   <img
                     src={item.image.url}
-                    alt="likes"
+                    alt="dislikes"
                     className={cssGrid.Img}
                   />
                 ) : (
@@ -78,7 +77,7 @@ const Likes = () => {
           </ul>
         )}
 
-        {likes.length === 0 && !isLoading && (
+        {dislikes.length === 0 && !isLoading && (
           <div className={css.TextWrap}>
             <p className={css.ItemNotFound}>No item found</p>
           </div>
@@ -88,4 +87,4 @@ const Likes = () => {
   );
 };
 
-export default Likes;
+export default Dislikes;

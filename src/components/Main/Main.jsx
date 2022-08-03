@@ -6,6 +6,8 @@ import BreedInfoPage from 'pages/BreedInfoPage';
 import Hero from '../Hero';
 import s from './Main.module.css';
 import LikesPage from 'pages/LikesPage';
+import DislikesPage from 'pages/DislikesPage';
+import FavouritePage from 'pages/FavouritePage';
 import SearchPage from 'pages/SearchPage';
 
 const Main = () => {
@@ -23,6 +25,10 @@ const Main = () => {
         <Route path="/search" element={<SearchPage />} />
 
         <Route path="/likes" element={<LikesPage />} />
+
+        <Route path="/dislikes" element={<DislikesPage />} />
+
+        <Route path="/favourites" element={<FavouritePage />} />
 
         <Route path="/breeds/:id" element={<BreedInfoPage />} />
       </Routes>

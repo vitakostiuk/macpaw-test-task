@@ -1,7 +1,6 @@
 .BigButton {
   display: inline-block;
-  width: 146px;
-  height: 40px;
+  padding: 5px 30px;
   background-color: var(--accent-color);
   color: #ffffff;
   border: none;

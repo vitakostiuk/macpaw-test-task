@@ -15,10 +15,60 @@
   margin-right: 0;
 }
 
-.Link {
+/* Styles for emojy icons and ssstyles for active link */
+.LikeLink {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  border-radius: 20px;
+  background-image: url('../../../images/like-30.svg');
+  background-color: #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.LikeLinkActive {
+  composes: LikeLink;
+  background-image: url('../../../images/like-white-30.svg');
+  background-color: var(--accent-color);
+}
+
+.FavouriteLink {
+  composes: LikeLink;
+  background-image: url('../../../images/fav-30.svg');
+}
+
+.FavouriteLinkActive {
+  composes: FavouriteLink;
+  background-color: var(--accent-color);
+  background-image: url('../../../images/fav-white-30.svg');
+}
+
+.DislikeLink {
+  composes: LikeLink;
+  background-image: url('../../../images/dislike-30.svg');
+}
+
+.DislikeLinkActive {
+  composes: DislikeLink;
+  background-color: var(--accent-color);
+  background-image: url('../../../images/dislike-white-30.svg');
+}
+
+/* Hover styles */
+.LikeLink:hover {
+  background-color: var(--accent-color);
+  background-image: url('../../../images/like-white-30.svg');
+}
+
+.DislikeLink:hover {
+  background-color: var(--accent-color);
+  background-image: url('../../../images/dislike-white-30.svg');
+}
+
+.FavouriteLink:hover {
+  background-color: var(--accent-color);
+  background-image: url('../../../images/fav-white-30.svg');
 }

@@ -17,6 +17,7 @@ import BreedInfo from './BreedInfo';
 import PageHeader from 'components/common/PageHeader';
 import Loader from 'components/common/Loader';
 import s from './Breeds.module.css';
+import cssGrid from 'styles/cssGrid.module.css';
 
 const BreedsPage = () => {
   const [allBreeds, setAllBreeds] = useState([]);
@@ -204,22 +205,22 @@ const BreedsPage = () => {
 
         {allBreeds && !isLoading && !isClickOnGalleryItem && (
           <>
-            <ul className={s.GalleryWrap}>
+            <ul className={cssGrid.GalleryWrap}>
               {allBreeds.map(({ name, id, image }) => (
                 <li
                   key={id}
-                  className={s.GalleryItem}
+                  className={cssGrid.GalleryItem}
                   onClick={handleClickOnGalleryItem}
                 >
                   {image ? (
                     <Link to={`${id}`}>
-                      <img src={image.url} alt="cat" className={s.Img} />
-                      <div className={s.After}>
-                        <button className={s.Name}>{name}</button>
+                      <img src={image.url} alt="cat" className={cssGrid.Img} />
+                      <div className={cssGrid.After}>
+                        <button className={cssGrid.Name}>{name}</button>
                       </div>
                     </Link>
                   ) : (
-                    <div className={s.ImgNotFound}>Image not found</div>
+                    <div className={cssGrid.ImgNotFound}>Image not found</div>
                   )}
                 </li>
               ))}

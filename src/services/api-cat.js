@@ -20,4 +20,9 @@ const uploadData = async (endpoint, formData, headers = {}) => {
   return data;
 };
 
-export { getData, postData, uploadData };
+const deleteVote = async (endpoint, id) => {
+  let { data } = await axios.delete(`${endpoint}/${id}`);
+  return data;
+};
+
+export { getData, postData, uploadData, deleteVote };
