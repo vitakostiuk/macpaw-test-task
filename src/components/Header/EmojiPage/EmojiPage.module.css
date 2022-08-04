@@ -11,6 +11,11 @@
   margin-right: 10px;
 }
 
+.ItemDark {
+  composes: Item;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .Item:last-child {
   margin-right: 0;
 }
@@ -24,9 +29,13 @@
   height: 100%;
   border-radius: 20px;
   background-image: url('../../../images/like-30.svg');
-  background-color: #fff;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.LikeLinkDark {
+  composes: LikeLink;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .LikeLinkActive {
@@ -40,6 +49,11 @@
   background-image: url('../../../images/fav-30.svg');
 }
 
+.FavouriteLinkDark {
+  composes: FavouriteLink;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .FavouriteLinkActive {
   composes: FavouriteLink;
   background-color: var(--accent-color);
@@ -49,6 +63,11 @@
 .DislikeLink {
   composes: LikeLink;
   background-image: url('../../../images/dislike-30.svg');
+}
+
+.DislikeLinkDark {
+  composes: DislikeLink;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .DislikeLinkActive {

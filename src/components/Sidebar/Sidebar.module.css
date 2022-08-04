@@ -1,12 +1,17 @@
+.Container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .Wrapper {
   position: sticky;
   top: 0;
   align-self: flex-start;
-  height: 544px;
   width: 446px;
   margin-left: 133px;
   margin-right: 66px;
   margin-top: 38px;
+  height: 100vh;
 }
 
 .Sidebar {
@@ -21,6 +26,11 @@
   margin-top: 80px;
 }
 
+.TitleDark {
+  composes: Title;
+  color: #ffffff;
+}
+
 .SubTitle {
   font-style: normal;
   font-weight: 400;
@@ -28,4 +38,21 @@
   line-height: 1.45;
   margin-top: 10px;
   color: var(--text-color);
+}
+
+/* logo */
+.LogoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.LogoPaw {
+  width: 24px;
+  height: 24px;
+  margin-right: 7.89px;
+}
+
+.LogoText {
+  width: 71.87px;
+  height: 12.56px;
 }

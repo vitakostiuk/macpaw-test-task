@@ -8,21 +8,37 @@
 }
 
 .BtnText {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 138px;
+  height: 36px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-top: 10px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 2px;
   color: var(--accent-color);
-  padding-top: 10px;
-  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.BtnTextDark {
+  composes: BtnText;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .BtnTextActive {
   composes: BtnText;
   color: #fff;
   background-color: var(--accent-color);
-  border-radius: 10px;
   cursor: pointer;
 }
 
 .BtnText:hover,
 .BtnText:focus {
   color: #fff;
+  background-color: var(--accent-color);
 }

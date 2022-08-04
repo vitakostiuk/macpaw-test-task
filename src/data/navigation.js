@@ -4,19 +4,19 @@ import imagesSearch from '../images/images-search.svg';
 
 export const navButtons = [
   {
-    name: 'VOTING',
+    name: 'voting',
     image: voteTable,
     backgroundColor: '#b4b7ff',
     path: '/voting',
   },
   {
-    name: 'BREEDS',
+    name: 'breeds',
     image: petBreeds,
     backgroundColor: '#97EAB9',
     path: '/breeds',
   },
   {
-    name: 'GALLERY',
+    name: 'gallery',
     image: imagesSearch,
     backgroundColor: '#FFD280',
     path: '/gallery',

@@ -80,6 +80,11 @@
   cursor: pointer;
 }
 
+.NameDark {
+  composes: Name;
+  background-color: #282828;
+}
+
 /* After for icon on Page Favourites*/
 .BackIcon {
   composes: Name;

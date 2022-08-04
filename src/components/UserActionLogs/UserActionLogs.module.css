@@ -14,6 +14,11 @@
   color: var(--strong-text-color);
 }
 
+.IdDark {
+  composes: Id;
+  color: #fff;
+}
+
 .Time {
   composes: Text;
   color: var(--strong-text-color);
@@ -26,6 +31,12 @@
   margin-right: 20px;
   background-color: #ffffff;
   border-radius: 5px;
+}
+
+.TimeDark {
+  composes: Time;
+  color: #fff;
+  background-color: #1d1d1d;
 }
 
 .ActionItem {

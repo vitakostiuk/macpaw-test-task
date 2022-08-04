@@ -36,36 +36,42 @@
   position: absolute;
   top: 398px;
   left: 50%;
+  width: 240px;
+  height: 80px;
+  border: 4px solid #fff;
   transform: translateX(-50%);
   display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #ffffff;
   border-radius: 20px;
+}
+
+.EmojiPageDark {
+  composes: EmojiPage;
+  border: 4px solid #282828;
+  background-color: #282828;
 }
 
 .Item {
   display: block;
   width: 80px;
   height: 80px;
-  background-color: #ffffff;
-  border-top: 4px solid #ffffff;
-  border-bottom: 4px solid #ffffff;
 }
 
 .Item:nth-child(1) {
-  border-left: 4px solid #ffffff;
-  border-right: 4px solid #ffffff;
   background-color: #97eab9;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
 
 .Item:nth-child(2) {
+  border-left: 4px solid #ffffff;
+  border-right: 4px solid #ffffff;
   background-color: #ff868e;
 }
 
 .Item:nth-child(3) {
-  border-left: 4px solid #ffffff;
-  border-right: 4px solid #ffffff;
   background-color: #ffd280;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -96,6 +102,11 @@
   background-color: #f8f8f7;
   border-radius: 10px;
   margin-bottom: 10px;
+}
+
+.ActionItemDark {
+  composes: ActionItem;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .ActionItem:last-child {

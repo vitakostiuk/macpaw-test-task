@@ -1,4 +1,3 @@
-import React from 'react';
 import BackBtn from 'components/common/BackBtn';
 import MainButton from 'components/common/MainButton';
 import s from './PageHeader.module.css';

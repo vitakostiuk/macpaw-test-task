@@ -1,5 +1,6 @@
 import * as api from 'services/api-cat';
-import { useState, useEffect } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
+import { useState, useEffect, useContext } from 'react';
 import UserActionLogs from '../UserActionLogs';
 import { ReactComponent as Like } from 'images/like-white-30.svg';
 import { ReactComponent as Favorite } from 'images/fav-white-30.svg';
@@ -23,6 +24,8 @@ const VotingBlock = () => {
   const [isClickDislike, setIsClickDislike] = useState(false);
   const [isClickFavourite, setIsClickFavourite] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
 
   // First fetch random cat and fetch after each click on button VOTING
   useEffect(() => {
@@ -149,7 +152,7 @@ const VotingBlock = () => {
           </div>
         )}
 
-        <ul className={s.EmojiPage}>
+        <ul className={theme === themes.light ? s.EmojiPage : s.EmojiPageDark}>
           <li className={s.Item}>
             <button
               type="button"
@@ -182,7 +185,12 @@ const VotingBlock = () => {
         {
           <ul className={s.ActionList}>
             {actionLogs.map(({ time, id, emoji }) => (
-              <li key={id} className={s.ActionItem}>
+              <li
+                key={id}
+                className={
+                  theme === themes.light ? s.ActionItem : s.ActionItemDark
+                }
+              >
                 <UserActionLogs time={time} id={id} emoji={emoji} />
               </li>
             ))}

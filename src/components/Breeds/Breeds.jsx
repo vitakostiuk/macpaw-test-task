@@ -4,8 +4,8 @@ import {
   NotificationManager,
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import React from 'react';
-import { useState, useEffect } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as SortAB } from 'images/sort-20.svg';
 import { ReactComponent as SortBA } from 'images/soft-revert-20.svg';
@@ -30,6 +30,8 @@ const BreedsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isClickOnGalleryItem, setIsClickOnGalleryItem] = useState(false);
   const [hiddenBtn, setHiddenBtn] = useState(true);
+
+  const { theme } = useContext(ThemeContext);
 
   // ---- GET ALL BREEDS
   useEffect(() => {
@@ -159,7 +161,9 @@ const BreedsPage = () => {
             <select
               name="breed"
               onChange={handleChange}
-              className={s.SelectName}
+              className={
+                theme === themes.light ? s.SelectName : s.SelectNameDark
+              }
             >
               {breedsOptions.map(({ value, label }) => (
                 <option key={value} value={value}>
@@ -170,7 +174,9 @@ const BreedsPage = () => {
             <select
               name="limit"
               onChange={handleChange}
-              className={s.SelectLimit}
+              className={
+                theme === themes.light ? s.SelectLimit : s.SelectLimtDark
+              }
             >
               {limitImg.map(({ value, label }) => (
                 <option key={value} value={value}>
@@ -182,14 +188,14 @@ const BreedsPage = () => {
               <>
                 <button
                   type="button"
-                  className={s.SortBtn}
+                  className={theme === themes.light ? s.SortBtn : s.SortBtnDark}
                   onClick={() => setTypeOfSort('DESC')}
                 >
                   <SortAB className={s.Letter} />
                 </button>
                 <button
                   type="button"
-                  className={s.SortBtn}
+                  className={theme === themes.light ? s.SortBtn : s.SortBtnDark}
                   onClick={() => setTypeOfSort('ASC')}
                 >
                   <SortBA className={s.Letter} />
@@ -216,7 +222,15 @@ const BreedsPage = () => {
                     <Link to={`${id}`}>
                       <img src={image.url} alt="cat" className={cssGrid.Img} />
                       <div className={cssGrid.After}>
-                        <button className={cssGrid.Name}>{name}</button>
+                        <button
+                          className={
+                            theme === themes.light
+                              ? cssGrid.Name
+                              : cssGrid.NameDark
+                          }
+                        >
+                          {name}
+                        </button>
                       </div>
                     </Link>
                   ) : (

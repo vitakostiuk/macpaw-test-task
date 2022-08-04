@@ -10,6 +10,11 @@
   margin-bottom: 20px;
 }
 
+.TitleDark {
+  composes: Title;
+  color: #ffffff;
+}
+
 .NavList {
   display: flex;
 }

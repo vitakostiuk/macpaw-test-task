@@ -1,13 +1,17 @@
 .Wrapper {
   width: 680px;
   height: 840px;
+  border-radius: 20px;
   background-color: #fbe0dc;
+}
+
+.WrapperDark {
+  composes: Wrapper;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .HeroImg {
   position: absolute;
-  width: 715px;
-  height: 920px;
-  top: -115px;
+  top: -83px;
   right: 10px;
 }

@@ -1,10 +1,13 @@
-import { ReactComponent as HeroSvg } from 'images/girl-and-pet.svg';
+import { useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
+import girlImg from 'images/girl-and-pet.png';
 import s from './Hero.module.css';
 
 const Hero = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className={s.Wrapper}>
-      <HeroSvg className={s.HeroImg} />
+    <div className={theme === themes.light ? s.Wrapper : s.WrapperDark}>
+      <img src={girlImg} alt="hero" className={s.HeroImg} />
     </div>
   );
 };

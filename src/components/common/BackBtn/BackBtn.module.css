@@ -11,3 +11,8 @@
   align-items: center;
   cursor: pointer;
 }
+
+.LeftArrowBtnDark {
+  composes: LeftArrowBtn;
+  background-color: rgba(255, 134, 142, 0.2);
+}

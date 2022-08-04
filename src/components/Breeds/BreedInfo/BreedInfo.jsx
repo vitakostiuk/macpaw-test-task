@@ -1,6 +1,8 @@
 import * as api from 'services/api-cat';
 import Slider from 'react-slick';
 import { useParams } from 'react-router-dom';
+import { ThemeContext, themes } from 'context/themeContect';
+import { useState, useEffect, useContext } from 'react';
 import TemplatePage from 'components/common/TemplatePage';
 import PageHeader from 'components/common/PageHeader';
 import Loader from 'components/common/Loader';
@@ -8,7 +10,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import s from '../../Search/Search.module.css';
 import './BreedInfo.css';
-import { useState, useEffect } from 'react';
 
 const BreedInfo = () => {
   const [allBreedsOptions, setAllBreedsOptions] = useState([]);
@@ -16,6 +17,7 @@ const BreedInfo = () => {
   const [imagesBreed, setImagesBreed] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { theme } = useContext(ThemeContext);
   let { id } = useParams();
 
   useEffect(() => {
@@ -108,24 +110,46 @@ const BreedInfo = () => {
             weight,
             life_span,
           }) => (
-            <div className="textWrapper">
-              <h1 className="name">{name}</h1>
+            <div
+              className={
+                theme === themes.light ? 'textWrapper' : 'textWrapperDark'
+              }
+            >
+              <h1 className={theme === themes.light ? 'name' : 'nameDark'}>
+                {name}
+              </h1>
               <h2 className="bredFor">{bred_for}</h2>
               <div className="optionsWrapper">
-                <div className="optionWrapper one">
-                  <h3 className="title">Temperament:&nbsp;</h3>
+                <div className="option">
+                  <h3
+                    className={theme === themes.light ? 'title' : 'titleDark'}
+                  >
+                    Temperament:&nbsp;
+                  </h3>
                   <span className="description">{temperament}</span>
                 </div>
-                <div className="optionWrapper two">
-                  <h3 className="title">Origin:&nbsp;</h3>
+                <div>
+                  <h3
+                    className={theme === themes.light ? 'title' : 'titleDark'}
+                  >
+                    Origin:&nbsp;
+                  </h3>
                   <span className="description">{origin}</span>
                 </div>
-                <div className="optionWrapper three">
-                  <h3 className="title">Weight:&nbsp;</h3>
+                <div>
+                  <h3
+                    className={theme === themes.light ? 'title' : 'titleDark'}
+                  >
+                    Weight:&nbsp;
+                  </h3>
                   <span className="description">{`${weight.metric} kgs`}</span>
                 </div>
-                <div className="optionWrapper four">
-                  <h3 className="title">Life span:&nbsp;</h3>
+                <div>
+                  <h3
+                    className={theme === themes.light ? 'title' : 'titleDark'}
+                  >
+                    Life span:&nbsp;
+                  </h3>
                   <span className="description">{`${life_span} years`}</span>
                 </div>
               </div>
