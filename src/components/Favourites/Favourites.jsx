@@ -1,5 +1,6 @@
 import * as api from 'services/api-cat';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
 import TemplatePage from 'components/common/TemplatePage';
 import PageHeader from 'components/common/PageHeader';
 import Loader from 'components/common/Loader';
@@ -15,6 +16,8 @@ const Favourites = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isClickImg, setIsClickImg] = useState(false);
   const [imgId, setImgId] = useState('');
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const getFavourites = async () => {
@@ -77,7 +80,13 @@ const Favourites = () => {
                       className={cssGrid.Img}
                     />
                     <div className={cssGrid.After}>
-                      <div className={cssGrid.BackIcon}>
+                      <div
+                        className={
+                          theme === themes.light
+                            ? cssGrid.IconContainer
+                            : cssGrid.IconContainerDark
+                        }
+                      >
                         <FavouritesIcon />
                       </div>
                     </div>
@@ -93,19 +102,28 @@ const Favourites = () => {
         {deleteFavourite.created_at &&
           deleteFavourite.id &&
           favourites.length > 0 && (
-            <div className={s.ActionItem}>
-              <span className={s.Time}>
+            <div
+              className={
+                theme === themes.light ? s.ActionItem : s.ActionItemDark
+              }
+            >
+              <span className={theme === themes.light ? s.Time : s.TimeDark}>
                 {getTime(deleteFavourite.created_at)}
               </span>
               <p className={s.Text}>
-                Image ID: <span className={s.Id}>{deleteFavourite.id}</span> was
-                removed from Favourites
+                Image ID:{' '}
+                <span className={theme === themes.light ? s.Id : s.IdDark}>
+                  {deleteFavourite.id}
+                </span>{' '}
+                was removed from Favourites
               </p>
             </div>
           )}
 
         {favourites.length === 0 && !isLoading && (
-          <div className={css.TextWrap}>
+          <div
+            className={theme === themes.light ? css.TextWrap : css.TextWrapDark}
+          >
             <p className={css.ItemNotFound}>No item found</p>
           </div>
         )}

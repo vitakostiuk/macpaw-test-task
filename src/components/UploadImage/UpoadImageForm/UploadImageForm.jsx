@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
 import * as api from 'services/api-cat';
 import { BallTriangle } from 'react-loader-spinner';
 import { ReactComponent as UploadSkeleton } from 'images/upload-bg.svg';
+import { ReactComponent as UploadSkeletonDark } from 'images/sceleton-dark.svg';
 import { ReactComponent as Success } from 'images/success-20.svg';
 import { ReactComponent as Error } from 'images/error-20.svg';
 import noCatFoundImg from 'images/dog-puppy-on-garden-royalty-free-image-1586966191 1.png';
@@ -13,6 +15,8 @@ const UploadImageForm = () => {
   const [uploadedImage, setUploadedImage] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (!selectedFile) return;
@@ -88,13 +92,33 @@ const UploadImageForm = () => {
           />
           <label htmlFor="inputFile" className={s.InputFileLabel}>
             <span className={s.SkeletonWrapper}>
-              <UploadSkeleton className={s.Skeleton} />
+              {theme === themes.light ? (
+                <UploadSkeleton className={s.Skeleton} />
+              ) : (
+                <UploadSkeletonDark />
+              )}
             </span>
             <p className={s.TextOverSceleton}>
-              <span className={s.TextOverSceletonStrong}>Drag here </span>your
-              file or{' '}
-              <span className={s.TextOverSceletonStrong}>Click here </span>to
-              upload
+              <span
+                className={
+                  theme === themes.light
+                    ? s.TextOverSceletonStrong
+                    : s.TextOverSceletonStrongDark
+                }
+              >
+                Drag here{' '}
+              </span>
+              your file or{' '}
+              <span
+                className={
+                  theme === themes.light
+                    ? s.TextOverSceletonStrong
+                    : s.TextOverSceletonStrongDark
+                }
+              >
+                Click here{' '}
+              </span>
+              to upload
             </p>
           </label>
         </>
@@ -104,7 +128,9 @@ const UploadImageForm = () => {
 
   return (
     <>
-      <h1 className={s.Title}>Upload a .jpg or .png Cat Image</h1>
+      <h1 className={theme === themes.light ? s.Title : s.TitleDark}>
+        Upload a .jpg or .png Cat Image
+      </h1>
       <h2 className={s.SubTitle}>
         Any uploads must comply with the{' '}
         <a
@@ -127,7 +153,15 @@ const UploadImageForm = () => {
         </div>
       )}
 
-      {!error && <div className={s.InputContainer}>{fileData()}</div>}
+      {!error && (
+        <div
+          className={
+            theme === themes.light ? s.InputContainer : s.InputContainerDark
+          }
+        >
+          {fileData()}
+        </div>
+      )}
 
       {!selectedFile && !error && (
         <p className={s.StatusUpload}>No file selected</p>
@@ -150,7 +184,13 @@ const UploadImageForm = () => {
         <>
           {' '}
           <p className={s.StatusUpload}>Image File Name: {selectedFile.name}</p>
-          <div className={s.StatusUploadWrap}>
+          <div
+            className={
+              theme === themes.light
+                ? s.StatusUploadWrap
+                : s.StatusUploadWrapDark
+            }
+          >
             <Error className={s.StatusIcon} />
             <p className={s.StatusError}>No Cat found - try a different one</p>
           </div>
@@ -158,7 +198,11 @@ const UploadImageForm = () => {
       )}
 
       {isClickUploadPhoto && !selectedFile && (
-        <div className={s.StatusUploadWrap}>
+        <div
+          className={
+            theme === themes.light ? s.StatusUploadWrap : s.StatusUploadWrapDark
+          }
+        >
           <Success className={s.StatusIcon} />
           <p className={s.StatusSuccess}>Thanks for the Upload - Cat found!</p>
         </div>

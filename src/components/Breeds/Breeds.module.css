@@ -46,7 +46,8 @@
 
 .SelectNameDark {
   composes: SelectName;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #1d1d1d;
+  /* background-color: rgba(255, 255, 255, 0.05); */
 }
 
 .SelectLimit {
@@ -58,7 +59,8 @@
 
 .SelectLimtDark {
   composes: SelectLimit;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #1d1d1d;
+  /* background-color: rgba(255, 255, 255, 0.05); */
 }
 
 .SortBtn {
@@ -75,7 +77,8 @@
 
 .SortBtnDark {
   composes: SortBtn;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #1d1d1d;
+  /* background-color: rgba(255, 255, 255, 0.05); */
 }
 
 .Letter {

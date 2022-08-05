@@ -1,5 +1,5 @@
-import { useState } from 'react';
-// import { useState, useEffect, useRef } from 'react';
+import { useState, useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
 import { ReactComponent as UpdateBtn } from 'images/update-20.svg';
 import { limitImg } from 'data/options';
 import { orderList } from 'data/options';
@@ -11,6 +11,8 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
   const [order, setOrder] = useState('');
   const [type, setType] = useState('');
   const [limit, setLimit] = useState(20);
+
+  const { theme } = useContext(ThemeContext);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -40,13 +42,18 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
 
   return (
     <>
-      <form className={s.Form} onSubmit={handleSubmit}>
+      <form
+        className={theme === themes.light ? s.Form : s.FormDark}
+        onSubmit={handleSubmit}
+      >
         <div className={s.SelectWrapper}>
           <label className={s.SelectLabel}>ORDER</label>
           <select
             name="order"
             onChange={handleChange}
-            className={s.SelectOrder}
+            className={
+              theme === themes.light ? s.SelectOrder : s.SelectOrderDark
+            }
           >
             {orderList.map(({ value, label }) => (
               <option key={value} value={value}>
@@ -58,7 +65,11 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
 
         <div className={s.SelectWrapper}>
           <label className={s.SelectLabel}>TYPE</label>
-          <select name="type" onChange={handleChange} className={s.SelectType}>
+          <select
+            name="type"
+            onChange={handleChange}
+            className={theme === themes.light ? s.SelectType : s.SelectTypeDark}
+          >
             {typeList.map(({ value, label }) => (
               <option key={value} value={value}>
                 {label}
@@ -72,7 +83,9 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
           <select
             name="breed"
             onChange={handleChange}
-            className={s.SelectBreed}
+            className={
+              theme === themes.light ? s.SelectBreed : s.SelectBreedDark
+            }
           >
             {breedsOptions.map(({ value, label }) => (
               <option key={value} value={value}>
@@ -87,7 +100,9 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
           <select
             name="limit"
             onChange={handleChange}
-            className={s.SelectLimit}
+            className={
+              theme === themes.light ? s.SelectLimit : s.SelectLimitDark
+            }
           >
             {limitImg.map(({ value, label }) => (
               <option key={value} value={value}>
@@ -98,7 +113,10 @@ const GalleryForm = ({ onSubmit, breedsOptions }) => {
         </div>
 
         <div className={s.SelectWrapper}>
-          <button type="submit" className={s.FormBtn}>
+          <button
+            type="submit"
+            className={theme === themes.light ? s.FormBtn : s.FormBtnDark}
+          >
             <UpdateBtn className={s.ImgBtn} />
           </button>
         </div>

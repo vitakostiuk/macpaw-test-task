@@ -144,7 +144,9 @@ const VotingBlock = () => {
         <PageHeader text="VOTING" onClick={handleClickVoting} />
 
         {imageUrl && (
-          <div className={s.ImgWrapper}>
+          <div
+            className={theme === themes.light ? s.ImgWrapper : s.ImgWrapperDark}
+          >
             {isLoading && <Loader />}
             {!isLoading && (
               <img src={imageUrl} alt="cat" className={s.Img}></img>

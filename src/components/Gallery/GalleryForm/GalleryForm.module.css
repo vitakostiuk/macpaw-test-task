@@ -11,6 +11,11 @@
   border-radius: 20px;
 }
 
+.FormDark {
+  composes: Form;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .SelectWrapper {
   display: flex;
   flex-direction: column;
@@ -34,15 +39,39 @@
   border: none;
 }
 
+.SelectTypeDark {
+  composes: SelectType;
+  background-color: #1d1d1d;
+  color: var(--text-color);
+  /* color: #fff; */
+}
+
 .SelectOrder,
 .SelectBreed {
   composes: SelectType;
   margin-right: 20px;
 }
 
+.SelectOrderDark,
+.SelectBreedDark {
+  composes: SelectType;
+  margin-right: 20px;
+  background-color: #1d1d1d;
+  color: var(--text-color);
+  /* color: #fff; */
+}
+
 .SelectLimit {
   composes: SelectType;
   width: 240px;
+}
+
+.SelectLimitDark {
+  composes: SelectType;
+  width: 240px;
+  background-color: #1d1d1d;
+  color: var(--text-color);
+  /* color: #fff; */
 }
 
 .FormBtn {
@@ -56,6 +85,13 @@
   margin-left: 10px;
   cursor: pointer;
   padding: 0;
+}
+
+.FormBtnDark {
+  composes: FormBtn;
+  background-color: #1d1d1d;
+  color: var(--text-color);
+  /* color: #fff; */
 }
 
 .ImgBtn {

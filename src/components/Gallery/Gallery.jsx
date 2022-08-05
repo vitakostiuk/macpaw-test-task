@@ -4,7 +4,8 @@ import {
   NotificationManager,
 } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
 import GalleryForm from './GalleryForm';
 import { getBreedsOptions } from 'utils/breedsOptions';
 import TemplatePage from 'components/common/TemplatePage';
@@ -26,6 +27,8 @@ const Gallery = () => {
   const [limit, setLimit] = useState(20);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const getBreeds = async () => {
@@ -114,10 +117,12 @@ const Gallery = () => {
       <TemplatePage isLoading={isLoading}>
         <PageHeader text="GALLERY">
           <MainButton
-            classNameBigBtn={s.BigLightButton}
+            classNameBigBtn={
+              theme === themes.light ? s.BigLightButton : s.BigLightButtonDark
+            }
             onClick={handleClickImage}
-            classNameText={setBreedsOptions.BigLightBtnText}
-            text="UPLOAD"
+            classNameText={s.BigLightBtnText}
+            text="upload"
           >
             <UploadBtn className={s.Svg} />
           </MainButton>

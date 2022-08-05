@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-// import React, { Component } from 'react';
+import { useEffect, useContext } from 'react';
+import { ThemeContext, themes } from 'context/themeContect';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { ReactComponent as CloseBtn } from 'images/close-20.svg';
@@ -8,6 +8,8 @@ import s from './Modal.module.css';
 const modalRoot = document.querySelector('#modal-root');
 
 const Modal = ({ onClose, children }) => {
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     const handleKeyDown = e => {
       if (e.code === 'Escape') {
@@ -32,8 +34,12 @@ const Modal = ({ onClose, children }) => {
 
   return createPortal(
     <div className={s.Backdrop} onClick={handleBackdropClick}>
-      <div className={s.Modal}>
-        <button type="button" className={s.CloseBtn} onClick={onClose}>
+      <div className={theme === themes.light ? s.Modal : s.ModalDark}>
+        <button
+          type="button"
+          className={theme === themes.light ? s.CloseBtn : s.CloseBtnDark}
+          onClick={onClose}
+        >
           <CloseBtn />
         </button>
         {children}
