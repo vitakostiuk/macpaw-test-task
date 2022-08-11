@@ -37,9 +37,9 @@ const UserActionLogs = ({ time, id, emoji }) => {
         <span className={theme === themes.light ? s.Id : s.IdDark}>{id}</span>{' '}
         {`was added to ${emoji}`}
       </p>
-      {likeStatus && <Like />}
-      {dislikeStatus && <Dislike />}
-      {favouriteStatus && <Favorite />}
+      {likeStatus && <Like className={s.Icon} />}
+      {dislikeStatus && <Dislike className={s.Icon} />}
+      {favouriteStatus && <Favorite className={s.Icon} />}
     </>
   );
 };

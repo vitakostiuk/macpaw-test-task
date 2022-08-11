@@ -1,10 +1,16 @@
 .Text {
-  width: 504px;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-color);
+  margin-left: 15px;
+}
+
+@media screen and (min-width: 768px) {
+  .Time {
+    margin-left: 0;
+  }
 }
 
 .Id {
@@ -27,10 +33,16 @@
   align-items: center;
   width: 61px;
   height: 30px;
-  margin-left: 15px;
-  margin-right: 20px;
+  margin-bottom: 10px;
   background-color: #ffffff;
   border-radius: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .Time {
+    margin-left: 15px;
+    margin-right: 20px;
+  }
 }
 
 .TimeDark {
@@ -48,6 +60,20 @@
   border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.Icon {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .Icon {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
 }
 
 .ActionItemDark {

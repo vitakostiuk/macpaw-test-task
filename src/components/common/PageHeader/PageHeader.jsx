@@ -11,13 +11,16 @@ const PageHeader = ({
 }) => {
   return (
     <div className={s.BtnWrapper}>
-      <BackBtn />
-      <MainButton
-        onClick={onClick}
-        text={text}
-        classNameBigBtn={classNameBigBtn}
-        classNameText={classNameText}
-      />
+      <div className={s.Container}>
+        <BackBtn />
+        <MainButton
+          onClick={onClick}
+          text={text}
+          classNameBigBtn={classNameBigBtn}
+          classNameText={classNameText}
+        />
+      </div>
+
       {children}
     </div>
   );

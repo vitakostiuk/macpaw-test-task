@@ -1,8 +1,17 @@
 .Wrapper {
-  width: 680px;
-  height: 840px;
-  border-radius: 20px;
-  background-color: #fbe0dc;
+  display: none;
+  visibility: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .Wrapper {
+    display: block;
+    visibility: visible;
+    width: 680px;
+    height: 840px;
+    border-radius: 20px;
+    background-color: #fbe0dc;
+  }
 }
 
 .WrapperDark {
@@ -11,7 +20,16 @@
 }
 
 .HeroImg {
-  position: absolute;
-  top: -83px;
-  right: 10px;
+  display: none;
+  visibility: hidden;
+}
+
+@media screen and (min-width: 1440px) {
+  .HeroImg {
+    display: block;
+    visibility: visible;
+    position: absolute;
+    top: -83px;
+    right: 10px;
+  }
 }

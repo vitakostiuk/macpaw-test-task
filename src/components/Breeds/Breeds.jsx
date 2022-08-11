@@ -158,50 +158,58 @@ const BreedsPage = () => {
       <TemplatePage isLoading={isLoading}>
         {!isClickOnGalleryItem && (
           <PageHeader text="BREEDS" onClick={handleClickBreeds}>
-            <select
-              name="breed"
-              onChange={handleChange}
-              className={
-                theme === themes.light ? s.SelectName : s.SelectNameDark
-              }
-            >
-              {breedsOptions.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-            <select
-              name="limit"
-              onChange={handleChange}
-              className={
-                theme === themes.light ? s.SelectLimit : s.SelectLimtDark
-              }
-            >
-              {limitImg.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {`Limit: ${label}`}
-                </option>
-              ))}
-            </select>
-            {name === 'All breeds' && (
-              <>
-                <button
-                  type="button"
-                  className={theme === themes.light ? s.SortBtn : s.SortBtnDark}
-                  onClick={() => setTypeOfSort('DESC')}
+            <div className={s.FilterContainer}>
+              <select
+                name="breed"
+                onChange={handleChange}
+                className={
+                  theme === themes.light ? s.SelectName : s.SelectNameDark
+                }
+              >
+                {breedsOptions.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+              <div className={s.LimitContainer}>
+                <select
+                  name="limit"
+                  onChange={handleChange}
+                  className={
+                    theme === themes.light ? s.SelectLimit : s.SelectLimtDark
+                  }
                 >
-                  <SortAB className={s.Letter} />
-                </button>
-                <button
-                  type="button"
-                  className={theme === themes.light ? s.SortBtn : s.SortBtnDark}
-                  onClick={() => setTypeOfSort('ASC')}
-                >
-                  <SortBA className={s.Letter} />
-                </button>
-              </>
-            )}
+                  {limitImg.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {`Limit: ${label}`}
+                    </option>
+                  ))}
+                </select>
+                {name === 'All breeds' && (
+                  <>
+                    <button
+                      type="button"
+                      className={
+                        theme === themes.light ? s.SortBtn : s.SortBtnDark
+                      }
+                      onClick={() => setTypeOfSort('DESC')}
+                    >
+                      <SortAB className={s.Letter} />
+                    </button>
+                    <button
+                      type="button"
+                      className={
+                        theme === themes.light ? s.SortBtn : s.SortBtnDark
+                      }
+                      onClick={() => setTypeOfSort('ASC')}
+                    >
+                      <SortBA className={s.Letter} />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
           </PageHeader>
         )}
 

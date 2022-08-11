@@ -1,9 +1,18 @@
 .Container {
-  display: flex;
-  width: 73px;
-  height: 24px;
-  justify-content: space-between;
-  align-items: center;
+  display: none;
+  visibility: hidden;
+}
+
+@media screen and (min-width: 1400px) {
+  .Container {
+    display: block;
+    visibility: visible;
+    display: flex;
+    width: 73px;
+    height: 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 .Eye {

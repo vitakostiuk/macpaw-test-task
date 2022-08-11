@@ -28,10 +28,22 @@
 }
 
 /* Select buttons */
+.FilterContainer {
+  display: block;
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .FilterContainer {
+    display: flex;
+    margin-top: 0;
+  }
+}
+
 .SelectName {
-  width: 226px;
+  width: 100%;
   height: 40px;
-  margin-left: 20px;
+
   padding-left: 10px;
   background-color: #f8f8f7;
   border-radius: 10px;
@@ -44,17 +56,40 @@
   border: none;
 }
 
+@media screen and (min-width: 768px) {
+  .SelectName {
+    width: 226px;
+    margin-left: 10px;
+  }
+}
+
 .SelectNameDark {
   composes: SelectName;
   background-color: #1d1d1d;
   /* background-color: rgba(255, 255, 255, 0.05); */
 }
 
+.LimitContainer {
+  display: flex;
+  margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .LimitContainer {
+    margin-top: 0;
+  }
+}
+
 .SelectLimit {
   composes: SelectName;
   width: 101px;
   height: 40px;
-  margin-left: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .SelectLimit {
+    margin-left: 10px;
+  }
 }
 
 .SelectLimtDark {

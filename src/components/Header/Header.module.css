@@ -1,3 +1,7 @@
-.Header {
-  display: flex;
+@media screen and (min-width: 768px) {
+  .Header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
 }

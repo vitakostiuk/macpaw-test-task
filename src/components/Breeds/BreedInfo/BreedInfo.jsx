@@ -61,7 +61,7 @@ const BreedInfo = () => {
   }, [allBreedsOptions, id]);
 
   // Settings for slider
-  const settings = {
+  let settings = {
     dots: true,
     infinite: true,
     speed: 500,

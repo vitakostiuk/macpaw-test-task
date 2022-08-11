@@ -1,12 +1,21 @@
 import { useContext } from 'react';
 import { ThemeContext, themes } from 'context/themeContect';
 import { NavLink } from 'react-router-dom';
+import { ReactComponent as OpenMenu } from 'images/stroke.svg';
 import s from './EmojiPage.module.css';
 
-const EmojiPage = () => {
+const EmojiPage = ({ openMenu }) => {
   const { theme } = useContext(ThemeContext);
   return (
     <ul className={s.EmojiPage}>
+      <button
+        // aria-expanded="false"
+        // aria-controls="mobile-menu"
+        className={`${s.OpenMenu} ${s.jsOpenMenu}`}
+        onClick={() => openMenu()}
+      >
+        <OpenMenu />
+      </button>
       <li className={theme === themes.light ? s.Item : s.ItemDark}>
         <NavLink
           to="/likes"

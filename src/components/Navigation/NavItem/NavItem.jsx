@@ -30,6 +30,7 @@ const NavItem = ({ name, image, backgroundColor, path }) => {
             return s.BtnTextActive;
           }
         }}
+        // onClick={() => onClickNavigation()}
       >
         {name}
       </NavLink>

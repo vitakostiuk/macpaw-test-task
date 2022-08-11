@@ -3,15 +3,33 @@
   justify-content: space-between;
 }
 
+.isHidden {
+  display: none;
+  visibility: hidden;
+}
+
 .Wrapper {
-  position: sticky;
+  position: absolute;
   top: 0;
-  align-self: flex-start;
-  width: 446px;
-  margin-left: 133px;
-  margin-right: 66px;
-  margin-top: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 30px;
   height: 100vh;
+}
+
+@media screen and (min-width: 1400px) {
+  .Wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    transform: translateX(0);
+    align-self: flex-start;
+    width: 446px;
+    margin-left: 133px;
+    margin-right: 66px;
+    margin-top: 38px;
+    height: 100vh;
+  }
 }
 
 .Sidebar {

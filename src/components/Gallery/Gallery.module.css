@@ -1,16 +1,26 @@
 .BigLightButton {
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: center; */
-  margin-left: 249px;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+  margin-top: 10px;
   background-color: #fbe0dc;
   color: var(--accent-color);
 }
 
+@media screen and (min-width: 768px) {
+  .BigLightButton {
+    width: 143px;
+    margin-left: 280px;
+    margin-top: 0;
+  }
+}
+
 .BigLightBtnText {
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: center; */
+  justify-content: center;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;

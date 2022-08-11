@@ -1,11 +1,13 @@
 .BigButton {
   display: inline-block;
+  min-width: 143px;
   padding: 5px 30px;
   background-color: var(--accent-color);
   color: #ffffff;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+
   font-style: normal;
   font-weight: 500;
   font-size: 20px;
